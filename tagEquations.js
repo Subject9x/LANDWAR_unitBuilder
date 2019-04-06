@@ -1,5 +1,3 @@
-import { REPL_MODE_STRICT } from "repl";
-
 /*
 LANDWAR Unit Builder - V0.0.1
 author: Peter Roohr
@@ -102,9 +100,11 @@ function tagCost_Crew(unitStat_Size_Value, unitTagValue_Crew){
 };
 
 /*
-    [Fearless] 
-        SCALAR!
-    [Base Cost] x 25% Unit automatically passes any Stress Check.
+    [Fearless]
+    -SCALAR!-
+    Unit automatically passes any Stress Check.
+
+    [Base Cost] x 25% 
 */
 
 /*
@@ -205,40 +205,118 @@ function tagCost_Overheat(unitStat_Dmg_Short_Value, unitStat_Dmg_Medium_Value, u
 };
 
 /*
-    Rank - Elite	[Total Cost] x 20%	Unit's ATK and DEF stats become 5 ATK Dice and 4 DEF Dice
+    [Rank - Elite]
+    -SCALAR!-
+    Unit's ATK and DEF stats become 5 ATK Dice and 4 DEF Dice
+
+    [Total Cost] x 20%
+*/
 
 /*
-    Rank - Green	[Total Cost] x -20%	Unit's ATK and DEF stats become 2 ATK Dice and 1 DEF Dice, subtract this tag cost from the Unit's base price.
+    [Rank - Green]	
+    -SCALAR!-
+    Unit's ATK and DEF stats become 2 ATK Dice and 1 DEF Dice, subtract this tag cost from the Unit's base price.
+
+    [Total Cost] x -20%	
+*/
 
 /*
-    Rank - Veteran	[Total Cost] x 10%	Unit's ATK and DEF stats become 4 ATK Dice and 3 DEF Dice
+    [Rank - Veteran]
+    -SCALAR!-		
+    Unit's ATK and DEF stats become 4 ATK Dice and 3 DEF Dice
+
+    [Total cost] x 10%
+*/
 
 /*
-    Recon	((1 / Move^2) * 100 ) + Size	IF during the Initiative Phase, this model has LoS on at least one Enemy mode, Add +1 to Initiative Rolls.
+    [Recon]
+    IF during the Initiative Phase, this model has LoS on at least one Enemy mode, Add +1 to Initiative Rolls.
+
+    ((1 / Move^2) * 100 ) + Size
+*/
+function tagCost_Recon(unitStat_Size_Value, unitStat_Move_Value){
+    return (((1 / (unitStat_Move_Value ^ 2)) * 100) + unitStat_Size_Value);
+};
 
 /*  
-    Self Healing	 Size * 2	Instead of Moving this turn, Unit may recover 1/3 round-down Armor points. All Attacks by this Unit this turn are at -4 ATK Dice
+    [Self Healing]	 
+    Instead of Moving this turn, Unit may recover 1/3 round-down Armor points. All Attacks by this Unit this turn are at -4 ATK Dice
+
+    Size * 2
+*/
+function tagCost_SelfHealing(unitStat_Size_Value){
+    return (unitStat_Size_Value * 2);
+};
 
 /*
-    Sharpshooter	DMG-S + Armor + (Move/4)	Unit does not suffer Stress penalty for targeting non-closest Enemy Unit
+    [Sharpshooter]	
+    Unit does not suffer Stress penalty for targeting non-closest Enemy Unit
+
+    DMG-S + Armor + (Move/4)
+*/
+function tagCost_Sharpshooter(unitStat_Move_Value, unitStat_Dmg_Short_Value, unitStat_Armor_Value){
+    return ((unitStat_Move_Value / 4) + unitStat_Armor_Value + unitStat_Dmg_Short_Value);
+};
 
 /*
-    Stable Fire Platform	( ( Move / 3 )+ Size ) * 4	Unit gains an additional +1 ATK when declaring Stationary during the Movement Phase
+    [Stable Fire Platform]
+    Unit gains an additional +1 ATK when declaring Stationary during the Movement Phase
+
+    ( ( Move / 3 )+ Size ) * 4
+*/
+function tagCost_StableFirePlatform(unitStat_Size_Value, unitStat_Move_Value){
+    return (((unitStat_Move_Value / 3) + unitStat_Size_Value) * 4);
+};
 
 /*  
-    Stall Speed	subtract (Move - Speed)	Gives this model a minimum move value that they must use otherwise they are destroyed in the Movment Phase. This model cannot take Stable Firing Platform along with this.  IF model cannot complete this minimum move, it is destroyed in the Resolution Phase.
+    [Stall Speed] 	
+    Gives this model a minimum move value that they must use otherwise they are destroyed in the Movment Phase. This model cannot take Stable Firing Platform along with this.  IF model cannot complete this minimum move, it is destroyed in the Resolution Phase.
+    
+    -(Move - Speed)
+*/
+function tagCost_StallSpeed(unitStat_Move_Value, unitTagValue_StallSpeed){
+    return (unitStat_Move_Value - unitTagValue_StallSpeed) * -1;
+};
 
 /*
-    Terrifying	((1 / size^2) * 10 ) + (Move / 2)	When Unit has finished its move, all Enemy Units within Short Range immediately suffer 1 Stress Point
+    [Terrifying]	
+    When Unit has finished its move, all Enemy Units within Short Range immediately suffer 1 Stress Point
+
+    ((1 / size^2) * 10 ) + (Move / 2)
+*/
+function tagCost_Terrifying(unitStat_Size_Value, unitStat_Move_Value){
+    return (((1 / (unitStat_Size_Value^2)) * 10) + (unitStat_Move_Value / 2));
+}
 
 /*  
-    Transform	1/2 total of each mode, then add together	Create 2 Statlines for a this Unit.  All damage is kept between the two modes. Unit cannot Move OR Shoot when switching between the modes. When calculating Unit Point Costs for Structure - only count the highest Structure value of all the modes.
+    [Transform]	
+    Create 2 Statlines for a this Unit.  All damage is kept between the two modes. Unit cannot Move OR Shoot when switching between the modes. When calculating Unit Point Costs for Structure - only count the highest Structure value of all the modes.
+
+    1/2 total of each mode, then add together
+*/
+//TODO - transform rules
+/*
+    [Transform Mobile]	
+    Treat as Transform, calculate costs as normal for Transform. Then, add this cost. Allows Unit to MOVE even if it has switched modes this turn.
+
+    (Move Cost A + Move Cost B) / 2
+*/
+//TODO - transform rules
 
 /*
-    Transform Mobile	(Move Cost A + Move Cost B) / 2	Treat as Transform, calculate costs as normal for Transform. Then, add this cost. Allows Unit to MOVE even if it has switched modes this turn.
+    [Transform Weapons]	
+    Treat as Transform, calculate costs as normal for Transform. Then, add this cost. Allows Unit to SHOOT even if it has switched modes this turn.
+
+    (Total Damage Cost A / 5) + (Total Damage Cost B / 5)
+*/
+//TODO - transform rules
 
 /*
-    Transform Weapons	(Total Damage Cost A / 5) + (Total Damage Cost B / 5)	Treat as Transform, calculate costs as normal for Transform. Then, add this cost. Allows Unit to SHOOT even if it has switched modes this turn.
+    [Transport]	
+    Unit may carry other Friendly Units. Total allowed number is based on the Size of the carried Units. Total Size of all carried units cannot exceed half of this Unit's Size value.
 
-/*
-    Transport	Size	Unit may carry other Friendly Units. Total allowed number is based on the Size of the carried Units. Total Size of all carried units cannot exceed half of this Unit's Size value.*/
+    Size
+*/
+function tagCost_Transport(unitStat_Size_Value){
+    return unitStat_Size_Value;
+};
