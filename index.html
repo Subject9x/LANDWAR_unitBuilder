@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+<meta charset="UTF-8"> 
 <!--
     LANDWAR Unit Builder V0.0.1
     Author: Peter Roohr
@@ -8,37 +9,44 @@
 -->
 <head>
     <title>LANDWAR Unit Builder v0.0.1</title>
+    <script src="unitEquations.js"></script>
+    <script src="unitEquationsController.js"></script>
 </head>
 <body>
   <h1>Landwar Unit Builder</h1>
   <form>
     <label for="size">Size</label>
     <input type="number" pattern=" 0+\.[0-9]*[1-9][0-9]*$" name="size">
+    <input type="hidden" pattern=" 0+\.[0-9]*[1-9][0-9]*$" name="sizeCost">
     <br>
     <label for="move">Move</label>
     <input type="number" pattern=" 0+\.[0-9]*[1-9][0-9]*$" name="move">
+    <input type="hidden" pattern=" 0+\.[0-9]*[1-9][0-9]*$" name="moveCost">
     <br>
     <label for="evade">Evade</label>
     <input type="number" pattern=" 0+\.[0-9]*[1-9][0-9]*$" name="evade">
+    <input type="hidden" pattern=" 0+\.[0-9]*[1-9][0-9]*$" name="evadeCost">
     <br>
     <label for="short">Damage (Short Range)</label>
     <input type="number" pattern=" 0+\.[0-9]*[1-9][0-9]*$" name="short">
+    <input type="hidden" pattern=" 0+\.[0-9]*[1-9][0-9]*$" name="dmgShortCost">
     <br>
     <label for="meduim">Damage (Medium Range)</label>
     <input type="number" pattern=" 0+\.[0-9]*[1-9][0-9]*$" name="medium">
+    <input type="hidden" pattern=" 0+\.[0-9]*[1-9][0-9]*$" name="dmgMediumCost">
     <br>
     <label for="long">Damage (Long Range)</label>
     <input type="number" pattern=" 0+\.[0-9]*[1-9][0-9]*$" name="long">
+    <input type="hidden" pattern=" 0+\.[0-9]*[1-9][0-9]*$" name="dmgLongCost">
     <br>
     <label for="armor">Armor</label>
     <input type="number" pattern=" 0+\.[0-9]*[1-9][0-9]*$" name="armor">
+    <input type="hidden" pattern=" 0+\.[0-9]*[1-9][0-9]*$" name="armorCost">
     <br>
     <label for="structure">Structure</label>
     <input type="number" pattern=" 0+\.[0-9]*[1-9][0-9]*$" name="structure">
+    <input type="hidden" pattern=" 0+\.[0-9]*[1-9][0-9]*$" name="structureCost">
   </form>
 
 </body>
-<script>
-
-</script>
 </html>
