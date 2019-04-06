@@ -14,6 +14,5 @@ http.createServer(function(req, res){
         res.write(data);
         res.end();
     });
-    console.log('hit');
 }).listen(8080);
 
