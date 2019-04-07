@@ -1,44 +1,87 @@
 <!DOCTYPE html>
 <html>
-<!--
-    LANDWAR Unit Builder V0.0.1
+<!-- LANDWAR Unit Builder V0.0.1
     Author: Peter Roohr
     Overview
-        main html entry point for application
--->
+        main html entry point for application-->
 <head>
+    <meta charset="UTF-8"> 
     <title>LANDWAR Unit Builder v0.0.1</title>
 </head>
 <body>
-  <h1>Landwar Unit Builder</h1>
+  <h1><u>Landwar Unit Builder</u></h1>
+  <h3><b>Rules Version v0.34</b></h3>
+  <h4><i>App Version v0.0.1</i></h4>
   <form>
-    <label for="size">Size</label>
-    <input type="number" pattern=" 0+\.[0-9]*[1-9][0-9]*$" name="size">
-    <br>
-    <label for="move">Move</label>
-    <input type="number" pattern=" 0+\.[0-9]*[1-9][0-9]*$" name="move">
-    <br>
-    <label for="evade">Evade</label>
-    <input type="number" pattern=" 0+\.[0-9]*[1-9][0-9]*$" name="evade">
-    <br>
-    <label for="short">Damage (Short Range)</label>
-    <input type="number" pattern=" 0+\.[0-9]*[1-9][0-9]*$" name="short">
-    <br>
-    <label for="meduim">Damage (Medium Range)</label>
-    <input type="number" pattern=" 0+\.[0-9]*[1-9][0-9]*$" name="medium">
-    <br>
-    <label for="long">Damage (Long Range)</label>
-    <input type="number" pattern=" 0+\.[0-9]*[1-9][0-9]*$" name="long">
-    <br>
-    <label for="armor">Armor</label>
-    <input type="number" pattern=" 0+\.[0-9]*[1-9][0-9]*$" name="armor">
-    <br>
-    <label for="structure">Structure</label>
-    <input type="number" pattern=" 0+\.[0-9]*[1-9][0-9]*$" name="structure">
+    <table >
+      <tr>
+        <th><b>Base Stat</b></th>
+        <th><b>Input Value</b></th>
+        <th><b>Point Cost</b></th>
+      </tr>
+      <tr>
+        <td><label for="inputSize">Size</label></td>
+        <td><input type="number" pattern=" 0+\.[0-9]*[1-9][0-9]*$" id="inputSizeId" name="inputSize" onchange="changeInputsize()" value="0"></td>
+        <td><label id="sizeCostValId" name="sizeCostVal" >0</label></td>
+      </tr>
+      <tr>
+        <td><label for="inputMove">Move</label></td>
+        <td><input type="number" pattern=" 0+\.[0-9]*[1-9][0-9]*$" id="inputMoveId" name="inputMove" onchange="changeInputMove()" value="0"></td>
+        <td><label id="moveCostValId" name="moveCostVal">0</label></td>
+      </tr>
+      <tr>
+        <td><label for="inputEvade">Evade</label></td>
+        <td><input type="number" pattern=" 0+\.[0-9]*[1-9][0-9]*$" id="inputEvadeId" name="inputEvade" onchange="changeInputEvade()" value="0"></td>
+        <td><label id="evadeCostValId" name="evadeCostVal">0</label></td>
+      </tr>
+      <tr>
+        <td><label for="inputDmgShort">Damage-Short Range</label></td>
+        <td><input type="number" pattern=" 0+\.[0-9]*[1-9][0-9]*$" id="inputDmgShortId" name="inputDmgShort" onchange="changeInputDamageShort()" value="0"></td>
+        <td><label id="dmgShortCostValId" name="dmgShortCostVal">0</label></td>
+      </tr>
+      <tr>
+        <td><label for="inputDmgMedium">Damage-Medium Range</label></td>
+        <td><input type="number" pattern=" 0+\.[0-9]*[1-9][0-9]*$" id="inputDmgMediumId" name="inputDmgMedium" onchange="changeInputDamageMedium()" value="0"></td>
+        <td><label id="dmgMediumCostValId" name="dmgMediumCostVal">0</label></td>
+      </tr>
+      <tr>
+        <td><label for="inputDmgLong">Damage-Long Range</label></td>
+        <td><input type="number" pattern=" 0+\.[0-9]*[1-9][0-9]*$" id="inputDmgLongId" name="inputDmgLong" onchange="changeInputDamageLong()" value="0"></td>
+        <td><label id="dmgLongCostValId" name="dmgLongCostVal">0</label></td>
+      </tr>
+      <tr>
+        <td><label for="inputArmor">Armor</label></td>
+        <td><input type="number" pattern=" 0+\.[0-9]*[1-9][0-9]*$" id="inputArmorId" name="inputArmor" onchange="changeInputArmor()" value="0"></td>
+        <td><label id="armorCostValId" name="armorCostVal">0</label></td>
+      </tr>
+      <tr>
+        <td><label for="inputStructure">Structure</label></td>
+        <td><input type="number" pattern=" 0+\.[0-9]*[1-9][0-9]*$" id="inputStructureId" name="inputStructure" onchange="changeInputStructure()" value="1"></td>
+        <td><label id="structureCostValId" name="structureCostVal">1</label></td>
+      </tr>
+      <tr>
+        <td>=================</td>
+        <td><label><b>Unit Base Cost:</b></label></td>
+        <td><label id="unitBaseCostId" name="unitBaseCost"></label></td>
+      </tr>
+    </table>
+    <input type="hidden" pattern=" 0+\.[0-9]*[1-9][0-9]*$" name="sizeCost">
+    <input type="hidden" pattern=" 0+\.[0-9]*[1-9][0-9]*$" name="moveCost">
+    <input type="hidden" pattern=" 0+\.[0-9]*[1-9][0-9]*$" name="evadeCost">
+    <input type="hidden" pattern=" 0+\.[0-9]*[1-9][0-9]*$" name="dmgShortCost">
+    <input type="hidden" pattern=" 0+\.[0-9]*[1-9][0-9]*$" name="dmgMediumCost">
+    <input type="hidden" pattern=" 0+\.[0-9]*[1-9][0-9]*$" name="dmgLongCost">
+    <input type="hidden" pattern=" 0+\.[0-9]*[1-9][0-9]*$" name="armorCost">
+    <input type="hidden" pattern=" 0+\.[0-9]*[1-9][0-9]*$" name="structureCost">
   </form>
+  <script src="unitEquations.js"></script>
+  <script src="unitEquationsController.js"></script>
+  <script>
+    document.onreadystatechange = function(){
+      if( document.readyState == "complete"){
 
+      }
+    }
+  </script>
 </body>
-<script>
-
-</script>
 </html>

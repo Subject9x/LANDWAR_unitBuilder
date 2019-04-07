@@ -15,7 +15,7 @@ overview
     (Size Value * 2)
 */
 function costStat_Size(unitSize){
-    return unitSize * 2;
+    return (unitSize * 2);
 };
 
 /*
