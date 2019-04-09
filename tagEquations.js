@@ -99,6 +99,10 @@ function tagCost_Crew(unitStat_Size_Value, unitTagValue_Crew){
     return ((unitStat_Size_Value / 1.5) + 1) * crewVal;
 };
 
+function tagCost_Crew_Limit(unitStat_Size_Value){
+    return Math.round((unitStat_Size_Value / 3) + 2);
+;}
+
 /*
     [Fearless]
     -SCALAR!-

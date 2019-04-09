@@ -52,7 +52,9 @@ function tagDataLocalList(){
             {
                 "name"  : "Crew (x)",
                 "id"    : 8,
-                "desc"  : "For stress rolls, roll x and take the highest (represents crew morale and squad morale). Limit of Crew Points is (Size / 3)  + 2"
+                "desc"  : "For stress rolls, roll x and take the highest (represents crew morale and squad morale). Limit of Crew Points is (Size / 3)  + 2",
+                "rank"  : true,
+                "limit" : "tagCost_Crew_Limit"
             },
             {
                 "name"  : "Fearless",
