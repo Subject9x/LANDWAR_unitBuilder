@@ -18,11 +18,15 @@ function tagAddRow(){
     var newTagRowCell1 = newTagRow.insertCell(1);
     var newTagRowCell2 = newTagRow.insertCell(2);
     var newTagRowCell3 = newTagRow.insertCell(3);
+    var newTagRowCell4 = newTagRow.insertCell(4);
+
+    newTagRow.id = newTagRowId;
 
     //creates dropdown for TAG row
     var cell0Element = document.createElement("select");
     newTagRow.id = "tagRow_" + newTagRowId
     tagList("tagRow_" + newTagRowId + "_select", cell0Element);
+    cell0Element.onchange = function(){tagRowSelectUpdate(newTagRowId)};
     newTagRowCell0.appendChild(cell0Element);
 
     //creates the 'rank' settings
@@ -44,6 +48,12 @@ function tagAddRow(){
     cell3Element.id =  "tagRow_" + newTagRowId + "_costBox";
     cell3Element.innerText = '0';
     newTagRowCell3.appendChild(cell3Element);
+
+    //Description section
+    var cell4Element = document.createElement("div");
+    cell4Element.id = "tagRow_" + newTagRowId + "_desc";
+    cell4Element.innerText = tagDataLocalList().tags[cell1Element.value].desc;
+    newTagRowCell4.appendChild(cell4Element);
     
 };
 
@@ -89,3 +99,31 @@ function tagList(tagRowId, tagRowSelect){
         tagRowSelect.appendChild(tagOption);
     }
 }
+
+/*
+    Updates the TAG Row's data when the selection changes
+*/
+function tagRowSelectUpdate(tagRowId){
+    var tagSelector = document.getElementById("tagRow_" + tagRowId + "_select");
+    var tagDesc = document.getElementById("tagRow_" + tagRowId + "_desc");
+    var tagRanks = document.getElementById("tagRow_" + tagRowId + "_rank");
+
+    var tagData = tagDataLocalList().tags[tagSelector.value];
+
+    if(tagData.rank){
+        tagRanks.innerText = "0 / " + tagData.limit;
+    }
+    else{
+        tagRanks.innerText = "N\A";
+    }
+
+    tagDesc.innerText = tagData.desc;
+}
+
+/*
+    returns the correct function to call
+*/
+
+function tagEquationFind(tagDataId){
+    
+};

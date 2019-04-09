@@ -6,6 +6,10 @@ overview
     + this is the localized version, ie no server needed
 */
 
+/*
+    Crude but effective, and serverless.
+    pack all TAG data into an array of JSON objects.
+*/ 
 function tagDataLocalList(){
     var tagData ={
         tags :[
@@ -87,106 +91,131 @@ function tagDataLocalList(){
                 "desc"  : "Ignore IF attacks. Ignore Overwatch for any ground units. Ground Units can only use Long Range attacks on this model. Any flyer can use Medium Range attacks."
             },
             {
-                "name"  : "Indirect Fire",
+                "name"  : "Indirect Fire Short",
                 "id"    : 15,
                 "desc"  : "Unit may make an Indirect Fire attack. X = desired brackets"
             },
             {
-                "name"  : "Jumpjets",
+                "name"  : "Indirect Fire Medium",
                 "id"    : 16,
+                "desc"  : "Unit may make an Indirect Fire attack. X = desired brackets"
+            },
+            {
+                "name"  : "Indirect Fire Long",
+                "id"    : 17,
+                "desc"  : "Unit may make an Indirect Fire attack. X = desired brackets"
+            },
+            {
+                "name"  : "Jumpjets",
+                "id"    : 18,
                 "desc"  : "Unit may traverse terrain vertically, uses flight rules when moving and for OW attacks, but is otherwise treated as a ground unit"
             },
             {
                 "name"  : "Limited Fire Arc",
-                "id"    : 17,
+                "id"    : 19,
                 "desc"  : "Subtract 1/3 from the cost of all firing ranges but Unit can only use the Overwatch firing arc for attacks."
             },
             {
                 "name"  : "Limited Use Weapon",
-                "id"    : 18,
+                "id"    : 20,
                 "desc"  : "Unit has an extra weapon and use at specificed ATK and specified range in place of its normal attack or an overwatch attack. Discard after use."
             },
             {
                 "name"  : "Melee (X)",
-                "id"    : 19,
+                "id"    : 21,
                 "desc"  : "Adds DMG to Unit's Melee Attacks"
             },
             {
                 "name"  : "Mobile HQ",
-                "id"    : 20,
+                "id"    : 22,
                 "desc"  : "Add +2 to all Initiative Rolls as long as this Unit is not destroyed."
             },
             {
                 "name"  : "Overheat",
-                "id"    : 21,
+                "id"    : 23,
                 "desc"  : "During Combat Phase, Unit may suffer 4 Stress Points to re-roll their Base ATK Dice roll. Cannot be combine with Fearless."
             },
             {
                 "name"  : "Rank - Elite",
-                "id"    : 22,
+                "id"    : 24,
                 "desc"  : "Unit's ATK and DEF stats become 5 ATK Dice and 4 DEF Dice"
             },
             {
                 "name"  : "Rank - Green",
-                "id"    : 23,
+                "id"    : 25,
                 "desc"  : "Unit's ATK and DEF stats become 2 ATK Dice and 1 DEF Dice, subtract this tag cost from the Unit's base price."
             },
             {
                 "name"  : "Rank - Veteran",
-                "id"    : 24,
+                "id"    : 26,
                 "desc"  : "Unit's ATK and DEF stats become 4 ATK Dice and 3 DEF Dice"
             },
             {
                 "name"  : "Recon",
-                "id"    : 25,
+                "id"    : 27,
                 "desc"  : "IF during the Initiative Phase, this model has LoS on at least one Enemy mode, Add +1 to Initiative Rolls."
             },
             {
                 "name"  : "Self Healing",
-                "id"    : 26,
+                "id"    : 28,
                 "desc"  : "Instead of Moving this turn, Unit may recover 1/3 round-down Armor points. All Attacks by this Unit this turn are at -4 ATK Dice"
             },
             {
                 "name"  : "Sharpshooter",
-                "id"    : 27,
+                "id"    : 29,
                 "desc"  : "Unit does not suffer Stress penalty for targeting non-closest Enemy Unit"
             },
             {
                 "name"  : "Stable Fire Platform",
-                "id"    : 28,
+                "id"    : 30,
                 "desc"  : "Unit gains an additional +1 ATK when declaring Stationary during the Movement Phase"
             },
             {
                 "name"  : "Stall Speed",
-                "id"    : 29,
+                "id"    : 31,
                 "desc"  : "Gives this model a minimum move value that they must use otherwise they are destroyed in the Movment Phase. This model cannot take Stable Firing Platform along with this.  IF model cannot complete this minimum move, it is destroyed in the Resolution Phase."
             },
             {
                 "name"  : "Terrifying",
-                "id"    : 30,
+                "id"    : 32,
                 "desc"  : "When Unit has finished its move, all Enemy Units within Short Range immediately suffer 1 Stress Point"
             },
             {
                 "name"  : "Transform",
-                "id"    : 31,
+                "id"    : 33,
                 "desc"  : "Create 2 Statlines for a this Unit.  All damage is kept between the two modes. Unit cannot Move OR Shoot when switching between the modes. When calculating Unit Point Costs for Structure - only count the highest Structure value of all the modes."
             },
             {
                 "name"  : "Transform Mobile",
-                "id"    : 32,
+                "id"    : 34,
                 "desc"  : "Treat as Transform, calculate costs as normal for Transform. Then, add this cost. Allows Unit to MOVE even if it has switched modes this turn."
             },
             {
                 "name"  : "Transform Weapons",
-                "id"    : 33,
+                "id"    : 35,
                 "desc"  : "Treat as Transform, calculate costs as normal for Transform. Then, add this cost. Allows Unit to SHOOT even if it has switched modes this turn."
             },
             {
                 "name"  : "Transport",
-                "id"    : 34,
+                "id"    : 36,
                 "desc"  : "Unit may carry other Friendly Units. Total allowed number is based on the Size of the carried Units. Total Size of all carried units cannot exceed half of this Unit's Size value."
             }
         ]
     };
     return tagData;
+};
+
+/*
+    Also pack the equations from tagEquations.js into an array
+    of functions. Binding the array number to the tag JSON id number.
+    'fun'
+*/
+
+function tagDataLocalEquationList(){
+    var tagDataEquations = [
+
+
+    ];
+
+    return tagDataEquations;
 };
