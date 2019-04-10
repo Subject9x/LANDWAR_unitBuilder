@@ -16,6 +16,7 @@ function tagDataLocalList(){
             {
                 "name"  : "Armor Piercing",
                 "id"    : 0,
+                "func"  : "tag_ArmorPiercing",
                 "desc"  : "When applying Damage from this unit’s attack. Apply the damage amount to the Target Model’s structure even if the Target Model has remaining armor points."
             },
             {
@@ -26,26 +27,31 @@ function tagDataLocalList(){
             {
                 "name"  : "Battering Ram",
                 "id"    : 2,
+                "func"  : "tag_BatteringRam",
                 "desc"  : "Units Ranged Attacks suffer -3 ATK but ignore Stress Check on Ram Attacks. Ram Attacks deal Size + 3 DMG"
             },
             {
                 "name"  : "Battery",
                 "id"    : 3,
+                "func"  : "tag_Battery",
                 "desc"  : "Unit may make an attack at each range bracket and ram all in the same turn"
             },
             {
                 "name"  : "Brawler",
                 "id"    : 4,
+                "func"  : "tag_Brawler",
                 "desc"  : "Must have Melee X. May Reroll 2 ATK or 1 DEF dice in Melee Attacks"
             },
             {
                 "name"  : "Cargo",
                 "id"    : 5,
+                "func"  : "tag_Cargo",
                 "desc"  : "Unit can instantly Pick Up an object if equal or smaller Size."
             },
             {
                 "name"  : "Charger",
                 "id"    : 6,
+                "func"  : "tag_Charger",
                 "desc"  : "Unit does not provoke [Overwatch] attacks"
             },
             {
@@ -56,9 +62,10 @@ function tagDataLocalList(){
             {
                 "name"  : "Crew (x)",
                 "id"    : 8,
+                "func"  : "tag_Crew",
                 "desc"  : "For stress rolls, roll x and take the highest (represents crew morale and squad morale). Limit of Crew Points is (Size / 3)  + 2",
                 "rank"  : true,
-                "limit" : "tagCost_Crew_Limit"
+                "limit" : "tagCall_Crew_Limit"
             },
             {
                 "name"  : "Fearless",
@@ -68,21 +75,25 @@ function tagDataLocalList(){
             {
                 "name"  : "Field Repair Kit",
                 "id"    : 10,
+                "func"  : "tag_FieldRepairKit",
                 "desc"  : "During Combat Phase, instead of making an Attack, Unit may target a Friendly Unit and repair a number of Armor Points on that Unit equal to this Unit Size / 2 "
             },
             {
                 "name"  : "Fortification",
                 "id"    : 11,
+                "func"  : "tag_Fortification",
                 "desc"  : "Unit may make unlimited overwatch attacks"
             },
             {
                 "name"  : "Forward Observer",
                 "id"    : 12,
+                "func"  : "tag_ForwardObserver",
                 "desc"  : "Choose 1 Friendly Model with the Indirect Fire tag. For this Combat Phase, this Friendly Model may ignore the penalty to Indirect Fire attacks."
             },
             {
                 "name"  : "Hero",
                 "id"    : 13,
+                "func"  : "tag_Hero",
                 "desc"  : "Hero may suffer +1 Stress Point to allow every Friendly Unit in Short Range to reroll their failed Stress Check."
             },
             {
@@ -93,26 +104,31 @@ function tagDataLocalList(){
             {
                 "name"  : "Indirect Fire Short",
                 "id"    : 15,
+                "func"  : "tag_IndirectFireShort",
                 "desc"  : "Unit may make an Indirect Fire attack. X = desired brackets"
             },
             {
                 "name"  : "Indirect Fire Medium",
                 "id"    : 16,
+                "func"  : "tag_IndirectFireMedium",
                 "desc"  : "Unit may make an Indirect Fire attack. X = desired brackets"
             },
             {
                 "name"  : "Indirect Fire Long",
                 "id"    : 17,
+                "func"  : "tag_IndirectFireLong",
                 "desc"  : "Unit may make an Indirect Fire attack. X = desired brackets"
             },
             {
                 "name"  : "Jumpjets",
                 "id"    : 18,
+                "func"  : "tag_JumpJets",
                 "desc"  : "Unit may traverse terrain vertically, uses flight rules when moving and for OW attacks, but is otherwise treated as a ground unit"
             },
             {
                 "name"  : "Limited Fire Arc",
                 "id"    : 19,
+                "func"  : "tag_LimitedFireArc",
                 "desc"  : "Subtract 1/3 from the cost of all firing ranges but Unit can only use the Overwatch firing arc for attacks."
             },
             {
@@ -128,11 +144,13 @@ function tagDataLocalList(){
             {
                 "name"  : "Mobile HQ",
                 "id"    : 22,
+                "func"  : "tag_MobileHQ",
                 "desc"  : "Add +2 to all Initiative Rolls as long as this Unit is not destroyed."
             },
             {
                 "name"  : "Overheat",
                 "id"    : 23,
+                "func"  : "tag_Overheat",
                 "desc"  : "During Combat Phase, Unit may suffer 4 Stress Points to re-roll their Base ATK Dice roll. Cannot be combine with Fearless."
             },
             {
@@ -153,31 +171,37 @@ function tagDataLocalList(){
             {
                 "name"  : "Recon",
                 "id"    : 27,
+                "func"  : "tag_Recon",
                 "desc"  : "IF during the Initiative Phase, this model has LoS on at least one Enemy mode, Add +1 to Initiative Rolls."
             },
             {
                 "name"  : "Self Healing",
                 "id"    : 28,
+                "func"  : "tag_SelfHealing",
                 "desc"  : "Instead of Moving this turn, Unit may recover 1/3 round-down Armor points. All Attacks by this Unit this turn are at -4 ATK Dice"
             },
             {
                 "name"  : "Sharpshooter",
                 "id"    : 29,
+                "func"  : "tag_Sharpshooter",
                 "desc"  : "Unit does not suffer Stress penalty for targeting non-closest Enemy Unit"
             },
             {
                 "name"  : "Stable Fire Platform",
                 "id"    : 30,
+                "func"  : "tag_StableFirePlatform",
                 "desc"  : "Unit gains an additional +1 ATK when declaring Stationary during the Movement Phase"
             },
             {
                 "name"  : "Stall Speed",
                 "id"    : 31,
+                "func"  : "tag_StallSpeed",
                 "desc"  : "Gives this model a minimum move value that they must use otherwise they are destroyed in the Movment Phase. This model cannot take Stable Firing Platform along with this.  IF model cannot complete this minimum move, it is destroyed in the Resolution Phase."
             },
             {
                 "name"  : "Terrifying",
                 "id"    : 32,
+                "func"  : "tag_Terrifying",
                 "desc"  : "When Unit has finished its move, all Enemy Units within Short Range immediately suffer 1 Stress Point"
             },
             {
@@ -198,6 +222,7 @@ function tagDataLocalList(){
             {
                 "name"  : "Transport",
                 "id"    : 36,
+                "func"  : "tag_Transport",
                 "desc"  : "Unit may carry other Friendly Units. Total allowed number is based on the Size of the carried Units. Total Size of all carried units cannot exceed half of this Unit's Size value."
             }
         ]
@@ -212,10 +237,32 @@ function tagDataLocalList(){
 */
 
 function tagDataLocalEquationList(){
-    var tagDataEquations = [
-
-
-    ];
-
-    return tagDataEquations;
+    return {
+        'tag_ArmorPiercing' : function(){ return tagCall_ArmorPiercing(mainUnitData);},
+        'tag_BatteringRam' :  function(){ return tagCall_BatteringRam(mainUnitData);},
+        'tag_Battery' :  function(){ return tagCall_Battery(mainUnitData);},
+        'tag_Cargo' :  function(){ return tagCall_Cargo(mainUnitData);},
+        'tag_Charger' :  function(){ return tagCall_Charger(mainUnitData);},
+        'tag_Crew' :  function(){ return tagCall_Crew(mainUnitData);},
+        'tag_FieldRepair' :  function(){ return tagCall_FieldRepair(mainUnitData);},
+        'tag_Fortification' :  function(){ return tagCall_Fortification(mainUnitData);},
+        'tag_ForwardObserver' :  function(){ return tagCall_ForwardObserver(mainUnitData);},
+        'tag_Hero' :  function(){ return tagCall_Hero(mainUnitData);},
+        'tag_IndirectFireShort' :  function(){ return tagCall_IndirectFireShort(mainUnitData);},
+        'tag_IndirectFireMedium' :  function(){ return tagCall_IndirectFireMedium(mainUnitData);},
+        'tag_IndirectFireLong' :  function(){ return tagCall_IndirectFireLong(mainUnitData);},
+        'tag_JumpJets' :  function(){ return tagCall_JumpJets(mainUnitData);},
+        'tag_LimitedFireArc' :  function(){ return tagCall_LimitedFireArc(mainUnitData);},
+        'tag_MobileHQ' :  function(){ return tagCall_MobileHQ(mainUnitData);},
+        'tag_Overheat' :  function(){ return tagCall_Overheat(mainUnitData);},
+        'tag_Recon' :  function(){ return tagCall_Recon(mainUnitData);},
+        'tag_SelfHealing' :  function(){ return tagCall_SelfHealing(mainUnitData);},
+        'tag_Sharpshooter' :  function(){ return tagCall_Sharpshooter(mainUnitData);},
+        'tag_StableFirePlatform' :  function(){ return tagCall_StableFirePlatform(mainUnitData);},
+        'tag_StallSpeed' :  function(){ return tagCall_StallSpeed(mainUnitData);},
+        'tag_Terrifying' :  function(){ return tagCall_Terrifying(mainUnitData);},
+        'tag_Transport' :  function(){ return tagCall_Transport(mainUnitData);}
+    };
 };
+
+var tagDataEquationList = tagDataLocalEquationList();

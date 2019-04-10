@@ -7,6 +7,36 @@ overview
 */
 
 /*
+    Create Unit data
+*/
+function unitData(){
+    return [{
+        'size' : 0,
+        'move' : 0,
+        'evade' : 0,
+        'melee' : 0,
+        'dmgShort' : 0,
+        'dmgMedium' : 0,
+        'dmgLong' : 0,
+        'armor' : 0,
+        'structure' : 0,
+        'baseCost' : 0,
+        'scalar' : 0,
+        'costSize' : 0,
+        'costMove' : 0,
+        'costEvade' : 0,
+        'costMelee' : 0,
+        'costDmgShort' : 0,
+        'costDmgMedium' : 0,
+        'costDmgLong' : 0,
+        'costArmor' : 0,
+        'costStructure' : 0
+    }];
+};
+
+var mainUnitData = unitData()[0];
+
+/*
     Core Stat Equations
         these are all non-tag cost equations
 */

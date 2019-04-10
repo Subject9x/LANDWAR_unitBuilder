@@ -19,41 +19,47 @@ function tagAddRow(){
     var newTagRowCell2 = newTagRow.insertCell(2);
     var newTagRowCell3 = newTagRow.insertCell(3);
     var newTagRowCell4 = newTagRow.insertCell(4);
+    var newTagRowCell5 = newTagRow.insertCell(5);
 
     newTagRow.id = newTagRowId;
 
-    //creates dropdown for TAG row
-    var cell0Element = document.createElement("select");
-    newTagRow.id = "tagRow_" + newTagRowId
-    tagList("tagRow_" + newTagRowId + "_select", cell0Element);
-    cell0Element.onchange = function(){tagRowSelectUpdate(newTagRowId)};
+    //create row delete key
+    var cell0Element = document.createElement("button");
+
     newTagRowCell0.appendChild(cell0Element);
 
-    //creates the 'rank' settings
-    var cell1Element = document.createElement("label");
-    cell1Element.id = "tagRow_" + newTagRowId + "_rank";
-    cell1Element.value = 0;
-    cell1Element.innerText = '0/[max]';
+    //creates dropdown for TAG row
+    var cell1Element = document.createElement("select");
+    newTagRow.id = "tagRow_" + newTagRowId
+    tagList("tagRow_" + newTagRowId + "_select", cell1Element);
+    cell1Element.onchange = function(){tagRowSelectUpdate(newTagRowId)};
     newTagRowCell1.appendChild(cell1Element);
 
-    //creates the 'active' checkbox
-    var cell2Element = document.createElement("input");
-    cell2Element.id = "tagRow_" + newTagRowId + "_checkBox";
-    cell2Element.type = "checkbox";
-    cell2Element.onclick = function(){tagRowChangeActive(cell2Element)};
+    //creates the 'rank' settings
+    var cell2Element = document.createElement("label");
+    cell2Element.id = "tagRow_" + newTagRowId + "_rank";
+    cell2Element.value = 0;
+    cell2Element.innerText = '0/[max]';
     newTagRowCell2.appendChild(cell2Element);
 
-    //creates the 'cost' value box
-    var cell3Element = document.createElement("label");
-    cell3Element.id =  "tagRow_" + newTagRowId + "_costBox";
-    cell3Element.innerText = '0';
+    //creates the 'active' checkbox
+    var cell3Element = document.createElement("input");
+    cell3Element.id = "tagRow_" + newTagRowId + "_checkBox";
+    cell3Element.type = "checkbox";
+    cell3Element.onclick = function(){tagRowChangeActive(cell3Element)};
     newTagRowCell3.appendChild(cell3Element);
 
-    //Description section
-    var cell4Element = document.createElement("div");
-    cell4Element.id = "tagRow_" + newTagRowId + "_desc";
-    cell4Element.innerText = tagDataLocalList().tags[cell1Element.value].desc;
+    //creates the 'cost' value box
+    var cell4Element = document.createElement("label");
+    cell4Element.id =  "tagRow_" + newTagRowId + "_costBox";
+    cell4Element.innerText = '0';
     newTagRowCell4.appendChild(cell4Element);
+
+    //Description section
+    var cell5Element = document.createElement("div");
+    cell5Element.id = "tagRow_" + newTagRowId + "_desc";
+    cell5Element.innerText = tagDataLocalList().tags[cell1Element.value].desc;
+    newTagRowCell5.appendChild(cell5Element);
     
 };
 
@@ -64,7 +70,7 @@ function tagAddRow(){
 function tagRemoveRow(){
     var tagTable = document.getElementById('tagTable');
     var tagRowTotal = tagTable.rows.length - 1;
-    console.log(tagRowTotal);
+
     if(tagRowTotal > 0){
         tagTable.deleteRow(tagRowTotal);
     }
@@ -105,6 +111,7 @@ function tagList(tagRowId, tagRowSelect){
 */
 function tagRowSelectUpdate(tagRowId){
     var tagSelector = document.getElementById("tagRow_" + tagRowId + "_select");
+    var tagCost = document.getElementById("tagRow_" + tagRowId + "_costBox");
     var tagDesc = document.getElementById("tagRow_" + tagRowId + "_desc");
     var tagRanks = document.getElementById("tagRow_" + tagRowId + "_rank");
 
@@ -118,12 +125,8 @@ function tagRowSelectUpdate(tagRowId){
     }
 
     tagDesc.innerText = tagData.desc;
+
+    if(tagDataEquationList[tagData.func] ){
+        tagCost.innerText = tagDataEquationList[tagData.func](mainUnitData);
+    }
 }
-
-/*
-    returns the correct function to call
-*/
-
-function tagEquationFind(tagDataId){
-    
-};

@@ -72,6 +72,7 @@
     <!-- TAG Section-->
     <table id="tagTable">
       <tr>
+        <th><b>Remove</b></th>
         <th><b>TAG Name</b></th>
         <th><b>Levels</b></th>
         <th><b>Active</b></th>
@@ -85,13 +86,15 @@
     <button type="button" id="btnRemoveTagRow" onclick="tagRemoveRow()">- Remove Tag -</button>
   </div>
   <script src="unitEquations.js"></script>
+  <script src="tagEquations.js"></script>
   <script src="unitEquationsController.js"></script>
+  <script src="tagEquationWrapper.js"></script>
   <script src="tagController.js"></script>
   <script src="tagDataLocal.js"></script>
   <script>
     document.onreadystatechange = function(){
       if( document.readyState == "complete"){
-
+        var mainUnit = unitData()[0];
       }
     }
   </script>

@@ -175,7 +175,7 @@ function tagCost_IndirectFireShort(unitStat_Dmg_Short_Value){
 
     DMG-X / 2
 */
-function tagCost_IndirectFireMeidum(unitStat_Dmg_Medium_Value){
+function tagCost_IndirectFireMedium(unitStat_Dmg_Medium_Value){
     return (unitStat_Dmg_Medium_Value / 2);
 };
 
