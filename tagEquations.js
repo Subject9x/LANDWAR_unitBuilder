@@ -64,7 +64,7 @@ function tagCost_Melee( unitTagValue_Melee, unitTagCost_Melee){
 
     (Size + 2) / 2	
 */
-function tagCost_Carg(unitStat_Size_Value){
+function tagCost_Cargo(unitStat_Size_Value){
     return ((unitStat_Size_Value + 2) / 2);
 };
 /*
@@ -98,6 +98,10 @@ function tagCost_Crew(unitStat_Size_Value, unitTagValue_Crew){
     //TODO - make sure crew val can never be larger than crew max
     return ((unitStat_Size_Value / 1.5) + 1) * crewVal;
 };
+
+function tagCost_Crew_Limit(unitStat_Size_Value){
+    return Math.round((unitStat_Size_Value / 3) + 2);
+;}
 
 /*
     [Fearless]
@@ -156,15 +160,34 @@ function tagCost_Hero(unitStat_Size_Value, unitStat_Armor_Value){
     //TODO - require [Stall Speed]
 
 /*
-    [Indirect Fire]
+    [Indirect Fire-Short]
     Unit may make an Indirect Fire attack suffering a -2 ATK Dice penalty. X = desired brackets
 
     DMG-X / 2
 */
-function tagCost_IndirectFire(){
-    //TODO
+function tagCost_IndirectFireShort(unitStat_Dmg_Short_Value){
+    return (unitStat_Dmg_Short_Value / 2);
 };
 
+/*
+    [Indirect Fire-Medium]
+    Unit may make an Indirect Fire attack suffering a -2 ATK Dice penalty. X = desired brackets
+
+    DMG-X / 2
+*/
+function tagCost_IndirectFireMedium(unitStat_Dmg_Medium_Value){
+    return (unitStat_Dmg_Medium_Value / 2);
+};
+
+/*
+    [Indirect Fire-Long]
+    Unit may make an Indirect Fire attack suffering a -2 ATK Dice penalty. X = desired brackets
+
+    DMG-X / 2
+*/
+function tagCost_IndirectFireLong(unitStat_Dmg_Long_Value){
+    return (unitStat_Dmg_Long_Value / 2);
+};
 /*
     [Jumpjets]		
     Unit may traverse terrain vertically, uses flight rules when moving and for OW attacks, but is otherwise treated as a ground unit.
@@ -176,8 +199,23 @@ function tagCost_JumpJets(unitStat_Move_Value){
 };
 
 /*
-    Limited Fire Arc	- (1/3 of cost of each dmg range)	Subtract 1/3 from the cost of all firing ranges but Unit can only use the Overwatch firing arc for attacks.*/
+    [Limited Fire Arc]
+    Subtract 1/3 from the cost of all firing ranges but Unit can only use the Overwatch firing arc for attacks.
 
+    - (1/3 of cost of each dmg range)
+*/
+function tagCost_LimitedFireArc(unitStat_Dmg_Short_Value, unitStat_Dmg_Medium_Value, unitStat_Dmg_Long_Value){
+    var dmgShort = unitStat_Dmg_Short_Value * 5;
+    dmgShort = dmgShort * .33;
+
+    var dmgMedium = unitStat_Dmg_Medium_Value * 4;
+    dmgMedium = dmgMedium * .33;
+
+    var dmgLong = unitStat_Dmg_Long_Value * 3;
+    dmgLong = dmgLong * .33;
+
+    return (dmgShort + dmgMedium + dmgLong) * -1;
+}
 /*
     Limited Use Weapon		Unit has an extra weapon and use at specificed ATK and specified range in place of its normal attack or an overwatch attack. Discard after use.*/
 

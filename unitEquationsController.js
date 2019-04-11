@@ -7,7 +7,7 @@ overview
 
 //saves on typing
 function utilZeroStat(stat){
-    var statVal = parseFloat(stat);
+    let statVal = parseFloat(stat);
 
     if(statVal < 0){
         return 0;
@@ -19,7 +19,7 @@ function utilZeroStat(stat){
     Running Base Cost totaller
 */
 function baseCostSum(){
-    var unitBaseCostSum = (utilZeroStat(document.getElementById('sizeCostValId').innerText) +
+    let unitBaseCostSum = (utilZeroStat(document.getElementById('sizeCostValId').innerText) +
         utilZeroStat(document.getElementById('moveCostValId').innerText) +
         utilZeroStat(document.getElementById('evadeCostValId').innerText) +
         utilZeroStat(document.getElementById('dmgShortCostValId').innerText) +
@@ -35,12 +35,14 @@ function baseCostSum(){
     inputSize
 */
 function changeInputsize(){
-    var newVal = utilZeroStat(document.getElementById('inputSizeId').value);
-    document.getElementById('sizeCostValId').innerText = costStat_Size(newVal);
+    let newVal = utilZeroStat(document.getElementById('inputSizeId').value);
+    document.getElementById('sizeCostValId').innerText = mainUnitData.costSize = costStat_Size(newVal);
 
     //the following values need the current size, so run them again when size changes
     changeInputArmor();
     changeInputMove();
+
+    mainUnitData.size = newVal;
 
     baseCostSum();
 };
@@ -49,10 +51,13 @@ function changeInputsize(){
     inputMove
 */
 function changeInputMove(){
-    var newMoveVal = utilZeroStat(document.getElementById('inputMoveId').value);
-    var currentSizeVal = utilZeroStat(document.getElementById('inputSizeId').value);
+    let newMoveVal = utilZeroStat(document.getElementById('inputMoveId').value);
+    let currentSizeVal = utilZeroStat(document.getElementById('inputSizeId').value);
 
-    document.getElementById('moveCostValId').innerText = costStat_Move(newMoveVal, currentSizeVal);
+    document.getElementById('moveCostValId').innerText = mainUnitData.costMove = costStat_Move(newMoveVal, currentSizeVal);
+
+    mainUnitData.move = newMoveVal;
+
     baseCostSum();
 };
 
@@ -60,9 +65,12 @@ function changeInputMove(){
     inputEvade
 */
 function changeInputEvade(){
-    var newEvadeVal = utilZeroStat(document.getElementById('inputEvadeId').value);
+    let newEvadeVal = utilZeroStat(document.getElementById('inputEvadeId').value);
 
-    document.getElementById('evadeCostValId').innerText = costStat_Evade(newEvadeVal);
+    document.getElementById('evadeCostValId').innerText = mainUnitData.costEvade = costStat_Evade(newEvadeVal);
+
+    mainUnitData.evade = newEvadeVal;
+
     baseCostSum();
 };
 
@@ -70,18 +78,24 @@ function changeInputEvade(){
     inputDmgShort
 */
 function changeInputDamageShort(){
-    var newDamageShortVal = utilZeroStat(document.getElementById('inputDmgShortId').value);
+    let newDamageShortVal = utilZeroStat(document.getElementById('inputDmgShortId').value);
 
-    document.getElementById('dmgShortCostValId').innerText = costStat_DamageShort(newDamageShortVal);
+    document.getElementById('dmgShortCostValId').innerText = mainUnitData.costDmgShort =  costStat_DamageShort(newDamageShortVal);
+
+    mainUnitData.dmgShort = newDamageShortVal;
+
     baseCostSum();
 };
 /*
     inputDmgMedium
 */
 function changeInputDamageMedium(){
-    var newDamageMediumVal = utilZeroStat(document.getElementById('inputDmgMediumId').value);
+    let newDamageMediumVal = utilZeroStat(document.getElementById('inputDmgMediumId').value);
 
-    document.getElementById('dmgMediumCostValId').innerText = costStat_DamageMedium(newDamageMediumVal);
+    document.getElementById('dmgMediumCostValId').innerText = mainUnitData.costDmgMedium = costStat_DamageMedium(newDamageMediumVal);
+   
+    mainUnitData.dmgMedium = newDamageMediumVal;
+
     baseCostSum();
 };
 
@@ -89,9 +103,12 @@ function changeInputDamageMedium(){
     inputDmgLong
 */
 function changeInputDamageLong(){
-    var newDamageLongVal = utilZeroStat(document.getElementById('inputDmgLongId').value);
+    let newDamageLongVal = utilZeroStat(document.getElementById('inputDmgLongId').value);
 
-    document.getElementById('dmgLongCostValId').innerText = costStat_DamageLong(newDamageLongVal);
+    document.getElementById('dmgLongCostValId').innerText = mainUnitData.costDmgLong = costStat_DamageLong(newDamageLongVal);
+
+    mainUnitData.dmgLong = newDamageLongVal;
+
     baseCostSum();
 };
 
@@ -99,10 +116,13 @@ function changeInputDamageLong(){
     inputArmor
 */
 function changeInputArmor(){
-    var newArmorVal = utilZeroStat(document.getElementById('inputArmorId').value);
-    var currentSizeVal = utilZeroStat(document.getElementById('inputSizeId').value);
+    let newArmorVal = utilZeroStat(document.getElementById('inputArmorId').value);
+    let currentSizeVal = utilZeroStat(document.getElementById('inputSizeId').value);
 
-    document.getElementById('armorCostValId').innerText = costStat_Armor(newArmorVal, currentSizeVal);
+    document.getElementById('armorCostValId').innerText = mainUnitData.costArmor = costStat_Armor(newArmorVal, currentSizeVal);
+
+    mainUnitData.armor = newArmorVal;
+
     baseCostSum();
 };
 
@@ -110,8 +130,11 @@ function changeInputArmor(){
     inputStructure
 */
 function changeInputStructure(){
-    var newStructureVal = utilZeroStat(document.getElementById('inputStructureId').value);
+    let newStructureVal = utilZeroStat(document.getElementById('inputStructureId').value);
 
-    document.getElementById('structureCostValId').innerText = costStat_Structure(newStructureVal);
+    document.getElementById('structureCostValId').innerText = mainUnitData.costStructure = costStat_Structure(newStructureVal);
+
+    mainUnitData.structure = newStructureVal;
+
     baseCostSum();
 };
