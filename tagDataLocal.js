@@ -237,32 +237,33 @@ function tagDataLocalList(){
 */
 
 function tagDataLocalEquationList(){
-    return {
-        'tag_ArmorPiercing' : function(){ return tagCall_ArmorPiercing(mainUnitData);},
-        'tag_BatteringRam' :  function(){ return tagCall_BatteringRam(mainUnitData);},
-        'tag_Battery' :  function(){ return tagCall_Battery(mainUnitData);},
-        'tag_Cargo' :  function(){ return tagCall_Cargo(mainUnitData);},
-        'tag_Charger' :  function(){ return tagCall_Charger(mainUnitData);},
-        'tag_Crew' :  function(){ return tagCall_Crew(mainUnitData);},
-        'tag_FieldRepair' :  function(){ return tagCall_FieldRepair(mainUnitData);},
-        'tag_Fortification' :  function(){ return tagCall_Fortification(mainUnitData);},
-        'tag_ForwardObserver' :  function(){ return tagCall_ForwardObserver(mainUnitData);},
-        'tag_Hero' :  function(){ return tagCall_Hero(mainUnitData);},
-        'tag_IndirectFireShort' :  function(){ return tagCall_IndirectFireShort(mainUnitData);},
-        'tag_IndirectFireMedium' :  function(){ return tagCall_IndirectFireMedium(mainUnitData);},
-        'tag_IndirectFireLong' :  function(){ return tagCall_IndirectFireLong(mainUnitData);},
-        'tag_JumpJets' :  function(){ return tagCall_JumpJets(mainUnitData);},
-        'tag_LimitedFireArc' :  function(){ return tagCall_LimitedFireArc(mainUnitData);},
-        'tag_MobileHQ' :  function(){ return tagCall_MobileHQ(mainUnitData);},
-        'tag_Overheat' :  function(){ return tagCall_Overheat(mainUnitData);},
-        'tag_Recon' :  function(){ return tagCall_Recon(mainUnitData);},
-        'tag_SelfHealing' :  function(){ return tagCall_SelfHealing(mainUnitData);},
-        'tag_Sharpshooter' :  function(){ return tagCall_Sharpshooter(mainUnitData);},
-        'tag_StableFirePlatform' :  function(){ return tagCall_StableFirePlatform(mainUnitData);},
-        'tag_StallSpeed' :  function(){ return tagCall_StallSpeed(mainUnitData);},
-        'tag_Terrifying' :  function(){ return tagCall_Terrifying(mainUnitData);},
-        'tag_Transport' :  function(){ return tagCall_Transport(mainUnitData);}
+    let functions = {
+        tag_ArmorPiercing : (mainUnitData)=>{ return tagCost_ArmorPiercing(mainUnitData.dmgShort, mainUnitData.dmgMedium, mainUnitData.dmgLong);},
+        tag_BatteringRam : (mainUnitData)=>{ return tagCost_BatteringRam(mainUnitData.size);},
+        tag_Battery : (mainUnitData)=>{ return tagCost_Battery(mainUnitData.dmgShort, mainUnitData.dmgMedium, mainUnitData.dmgLong, mainUnitData.size);},
+        tag_Cargo : (mainUnitData)=>{ return tagCost_Cargo(mainUnitData.size);},
+        tag_Charger : (mainUnitData)=>{ return tagCost_Charger(mainUnitData.size, mainUnitData.move);},
+        tag_Crew : (mainUnitData)=>{ return tagCost_Crew(mainUnitData.size, 0);},
+        tag_FieldRepair : (mainUnitData)=>{ return tagCost_FieldRepair(mainUnitData.size, mainUnitData.move);},
+        tag_Fortification : (mainUnitData)=>{ return tagCost_Fortification(mainUnitData.move, mainUnitData.dmgShort);},
+        tag_ForwardObserver : (mainUnitData)=>{ return tagCost_ForwardObserver(mainUnitData.move, mainUnitData.armor, mainUnitData.structure);},
+        tag_Hero : (mainUnitData)=>{ return tagCost_Hero(mainUnitData.size, mainUnitData.armor);},
+        tag_IndirectFireShort : (mainUnitData)=>{ return tagCost_IndirectFireShort(mainUnitData.dmgShort);},
+        tag_IndirectFireMedium : (mainUnitData)=>{ return tagCost_IndirectFireMedium(mainUnitData.dmgMedium);},
+        tag_IndirectFireLong : (mainUnitData)=>{ return tagCost_IndirectFireLong(mainUnitData.dmgLong);},
+        tag_JumpJets : (mainUnitData)=>{ return tagCost_JumpJets(mainUnitData.move);},
+        tag_LimitedFireArc : (mainUnitData)=>{ return tagCost_LimitedFireArc(mainUnitData.dmgShort, mainUnitData.dmgMedium, mainUnitData.dmgLong);},
+        tag_MobileHQ : (mainUnitData)=>{ return tagCost_MobileHQ(mainUnitData.baseCost);},
+        tag_Overheat : (mainUnitData)=>{ return tagCost_Overheat(mainUnitData.dmgShort, mainUnitData.dmgMedium, mainUnitData.dmgLong);},
+        tag_Recon : (mainUnitData)=>{ return tagCost_Recon(mainUnitData.size, mainUnitData.move);},
+        tag_SelfHealing : (mainUnitData)=>{ return tagCost_SelfHealing(mainUnitData.size);},
+        tag_Sharpshooter : (mainUnitData)=>{ return tagCost_Sharpshooter(mainUnitData.move, mainUnitData.dmgShort, mainUnitData.armor);},
+        tag_StableFirePlatform : (mainUnitData)=>{ return tagCost_StableFirePlatform(mainUnitData.size, mainUnitData.move);},
+        tag_StallSpeed : (mainUnitData)=>{ return tagCost_StallSpeed(mainUnitData.move, 0);},
+        tag_Terrifying : (mainUnitData)=>{ return tagCost_Terrifying(mainUnitData.size, mainUnitData.move);},
+        tag_Transport : (mainUnitData)=>{ return tagCost_Transport(mainUnitData.size);}
     };
+    return functions;
 };
 
 var tagDataEquationList = tagDataLocalEquationList();
