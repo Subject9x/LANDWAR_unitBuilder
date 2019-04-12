@@ -21,11 +21,10 @@ function tagAddRow(){
     let newTagRowCell4 = newTagRow.insertCell(4);
     let newTagRowCell5 = newTagRow.insertCell(5);
 
-    newTagRow.id = newTagRowId;
-    newTagRow.id = "tagRow_" + newTagRowId
+    newTagRow.id = "tagRow_" + newTagRowId;
 
     //create row delete key
-    let cell0Element = document.createElement("button", ) ;
+    let cell0Element = document.createElement("button") ;
     cell0Element.innerHTML = "Remove";
     cell0Element.addEventListener("click", function() {
         tagRemoveRowById(newTagRow.id);
