@@ -70,24 +70,11 @@ function tagAddRow(){
     removes a tag row from the tag table,
     also adjusts total price and undoes the tag cost
 */
-function tagRemoveRow(){
-    var tagTable = document.getElementById('tagTable');
-    let tagRowTotal = tagTable.rows.length - 1;
-
-    tagTable.deleteRow(tagRowTotal);
-    
-    //TODO - adjust total tag costs
-};
-
-/*
-    removes a tag row from the tag table,
-    also adjusts total price and undoes the tag cost
-*/
 function tagRemoveRowById(tagRowId){
     var tagTable = document.getElementById('tagTable');
-    var rowIndex = document.getElementById(tagRowId);
+    var tagRow = document.getElementById(tagRowId);
 
-    tagTable.deleteRow(rowIndex.rowIndex);
+    tagTable.deleteRow(tagRow.rowIndex);
     
     //TODO - adjust total tag costs
 };
