@@ -21,16 +21,19 @@ function tagAddRow(){
     let newTagRowCell4 = newTagRow.insertCell(4);
     let newTagRowCell5 = newTagRow.insertCell(5);
 
-    newTagRow.id = newTagRowId;
+    newTagRow.id = "tagRow_" + newTagRowId;
 
     //create row delete key
     let cell0Element = document.createElement("button");
+    cell0Element.innerHTML = "Remove";
+    cell0Element.addEventListener("click", function() {
+        tagRemoveRowById(newTagRow.id);
+    });
 
     newTagRowCell0.appendChild(cell0Element);
 
     //creates dropdown for TAG row
     let cell1Element = document.createElement("select");
-    newTagRow.id = "tagRow_" + newTagRowId
     tagList("tagRow_" + newTagRowId + "_select", cell1Element);
     cell1Element.onchange = function(){tagRowSelectUpdate(newTagRowId)};
     newTagRowCell1.appendChild(cell1Element);
@@ -67,13 +70,12 @@ function tagAddRow(){
     removes a tag row from the tag table,
     also adjusts total price and undoes the tag cost
 */
-function tagRemoveRow(){
+function tagRemoveRowById(tagRowId){
     var tagTable = document.getElementById('tagTable');
-    let tagRowTotal = tagTable.rows.length - 1;
+    var tagRow = document.getElementById(tagRowId);
 
-    if(tagRowTotal > 0){
-        tagTable.deleteRow(tagRowTotal);
-    }
+    tagTable.deleteRow(tagRow.rowIndex);
+    
     //TODO - adjust total tag costs
 };
 
