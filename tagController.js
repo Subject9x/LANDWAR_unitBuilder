@@ -95,8 +95,8 @@ function tagRowChangeActive(tagRowCheck){
 function tagList(tagRowId, tagRowSelect){
     var tagData = tagDataLocalList();
     tagRowSelect.id = tagRowId;
+    
     let optionItr;
-
     for(optionItr = 0; optionItr < tagData.tags.length; optionItr++){
         let tagItem = tagData.tags[optionItr];
         let tagOption = document.createElement('option');
@@ -115,18 +115,25 @@ function tagRowSelectUpdate(tagRowId){
     let tagDesc = document.getElementById("tagRow_" + tagRowId + "_desc");
     let tagRanks = document.getElementById("tagRow_" + tagRowId + "_rank");
 
-    var tagData = tagDataLocalList().tags[tagSelector.value];
-
-    if(tagData.rank){
-        tagRanks.innerText = "0 / " + tagData.limit;
+    if(tagSelector.value > 0){
+        var tagData = tagDataLocalList().tags[tagSelector.value];
+    
+        if(tagData.rank){
+            tagRanks.innerText = "0 / " + tagData.limit;
+        }
+        else{
+            tagRanks.innerText = "N\A";
+        }
+    
+        tagDesc.innerText = tagData.desc;
+    
+        if(tagDataEquationList[tagData.func] ){
+            tagCost.innerText = tagDataEquationList[tagData.func](mainUnitData);
+        }
     }
     else{
+        tagCost.innerText = "-";
         tagRanks.innerText = "N\A";
-    }
-
-    tagDesc.innerText = tagData.desc;
-
-    if(tagDataEquationList[tagData.func] ){
-        tagCost.innerText = tagDataEquationList[tagData.func](mainUnitData);
+        tagDesc.innerText = "[select a tag]";
     }
 }
