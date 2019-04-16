@@ -23,12 +23,9 @@ function tagAddRow(){
 
     newTagRow.id = "tagRow_" + newTagRowId;
 
-    //create row delete key
-    let cell0Element = document.createElement("button");
-    cell0Element.innerHTML = "Remove";
-    cell0Element.addEventListener("click", function() {
-        tagRemoveRowById(newTagRow.id);
-    });
+    //create row delete key - only when TAG is chosen
+    let cell0Element = document.createElement("label");
+    cell0Element.id = newTagRow.id + "_remove_label";
     newTagRowCell0.appendChild(cell0Element);
 
     //creates dropdown for TAG row
@@ -162,6 +159,21 @@ function tagRowSelectUpdate(tagRowId){
         tagRowCell.appendChild(tagLabel);
 
         tagListsUpdate();
+
+
+        let tagRow = document.getElementById(tagRow.id);
+        let tagRemovelabel = document.getElementById(tagRow.id + "_remove_label");
+        tagRemovelabel.remove();
+
+        let tagRemoveButton = document.createElement("button");
+        tagRemoveButton.id = tagRowId + "_remove_button";
+
+        tagRemoveButton.innerHTML = "[-]";
+        tagRemoveButton.addEventListener("click", function() {
+            tagRemoveRowById(tagRowId);
+        });
+        tagRow.children[0].children[0].appendChild(tagRemoveButton);
+
     }
     else{
         tagCost.innerText = "-";
