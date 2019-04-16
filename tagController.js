@@ -29,13 +29,13 @@ function tagAddRow(){
     cell0Element.addEventListener("click", function() {
         tagRemoveRowById(newTagRow.id);
     });
-
     newTagRowCell0.appendChild(cell0Element);
 
     //creates dropdown for TAG row
     let cell1Element = document.createElement("select");
     tagList("tagRow_" + newTagRowId + "_select", cell1Element);
     cell1Element.onchange = function(){tagRowSelectUpdate(newTagRowId)};
+    cell1Element.onfocus = function(){tagListOnFocus(this)};
     newTagRowCell1.appendChild(cell1Element);
 
     //creates the 'rank' settings
@@ -73,10 +73,20 @@ function tagAddRow(){
 function tagRemoveRowById(tagRowId){
     var tagTable = document.getElementById('tagTable');
     var tagRow = document.getElementById(tagRowId);
+    let tagRowSelect = tagRow.children[1].children[0];  //yes, this assumes a hardcoded order of child elements ('bad form' - Hook)
+    let tagRowSelectValue = tagRowSelect.value.toString();
 
-    tagTable.deleteRow(tagRow.rowIndex);
+    //removes tagId from Unit Data's tagIds[]
+    let removeIdIndex = mainUnitData.tagIds.indexOf(tagRowSelectValue, 0);
+    mainUnitData.tagIds.splice(removeIdIndex, 1);
     
+    tagTable.deleteRow(tagRow.rowIndex);
+
+    //update other take row selects with the change
+    tagListsUpdate();
+
     //TODO - adjust total tag costs
+
 };
 
 /*
@@ -98,15 +108,23 @@ function tagList(tagRowId, tagRowSelect){
     var tagData = tagDataLocalList();
     tagRowSelect.id = tagRowId;
     
+    //wipe out list
+    tagRowSelect.innerHTML = "";
+
     let optionItr;
     for(optionItr = 0; optionItr < tagData.tags.length; optionItr++){
         let tagItem = tagData.tags[optionItr];
         let tagOption = document.createElement('option');
+
         tagOption.value = tagItem.id;
         tagOption.text = tagItem.name;
-        tagRowSelect.appendChild(tagOption);
+
+        if(mainUnitData.tagIds.includes(tagItem.id.toString())){
+            tagOption.disabled = 'true';
+        }
+        tagRowSelect.appendChild(tagOption);   
     }
-}
+};
 
 /*
     Updates the TAG Row's data when the selection changes
@@ -132,10 +150,41 @@ function tagRowSelectUpdate(tagRowId){
         if(tagDataEquationList[tagData.func] ){
             tagCost.innerText = tagDataEquationList[tagData.func](mainUnitData);
         }
+        mainUnitData.tagIds.push(tagSelector.value);
+        
+        //remove selector, lock-in the TAG, because trying to live-update all other lists is a headache
+        let tagLabel = document.createElement('label');
+        let tagRowCell = tagSelector.parentElement;
+        tagLabel.id = tagSelector.id;
+        tagLabel.innerText = tagData.name;
+        tagLabel.value = tagSelector.value;
+        tagSelector.remove();
+        tagRowCell.appendChild(tagLabel);
+
+        tagListsUpdate();
     }
     else{
         tagCost.innerText = "-";
         tagRanks.innerText = "N\A";
         tagDesc.innerText = "[select a tag]";
     }
+};
+
+/*
+    updates all tag lists for unit when one of the selections changes
+*/
+function tagListsUpdate(){
+    let tagRows = document.getElementsByTagName('select');
+    let tagRowsItr;
+    for(tagRowsItr = 0; tagRowsItr < tagRows.length; tagRowsItr++){
+        tagList(tagRows[tagRowsItr].id, tagRows[tagRowsItr]);
+    }
+};
+
+/*
+    cache the select's previous value
+*/
+function tagListOnFocus(tagRowObj){
+    let tagRowSelect = document.getElementById(tagRowObj.id);
+    tagRowSelect.setAttribute('data-previous', tagRowSelect.value);
 }

@@ -30,7 +30,8 @@ function unitData(){
         'costDmgMedium' : 0,
         'costDmgLong' : 0,
         'costArmor' : 0,
-        'costStructure' : 0
+        'costStructure' : 0,
+        'tagIds' : []
     }];
 };
 
