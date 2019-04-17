@@ -23,12 +23,9 @@ function tagAddRow(){
 
     newTagRow.id = "tagRow_" + newTagRowId;
 
-    //create row delete key
-    let cell0Element = document.createElement("button");
-    cell0Element.innerHTML = "Remove";
-    cell0Element.addEventListener("click", function() {
-        tagRemoveRowById(newTagRow.id);
-    });
+    //create row delete key - only when TAG is chosen
+    let cell0Element = document.createElement("label");
+    cell0Element.id = newTagRow.id + "_remove_label";
     newTagRowCell0.appendChild(cell0Element);
 
     //creates dropdown for TAG row
@@ -72,7 +69,7 @@ function tagAddRow(){
 */
 function tagRemoveRowById(tagRowId){
     var tagTable = document.getElementById('tagTable');
-    var tagRow = document.getElementById(tagRowId);
+    var tagRow = document.getElementById('tagRow_' + tagRowId);
     let tagRowSelect = tagRow.children[1].children[0];  //yes, this assumes a hardcoded order of child elements ('bad form' - Hook)
     let tagRowSelectValue = tagRowSelect.value.toString();
 
@@ -162,6 +159,21 @@ function tagRowSelectUpdate(tagRowId){
         tagRowCell.appendChild(tagLabel);
 
         tagListsUpdate();
+
+
+        let tagRow = document.getElementById('tagRow_' + tagRowId);
+        let tagRemovelabel = document.getElementById(tagRow.id + "_remove_label");
+        tagRemovelabel.remove();
+
+        let tagRemoveButton = document.createElement("button");
+        tagRemoveButton.id = tagRowId + "_remove_button";
+
+        tagRemoveButton.innerHTML = "[-]";
+        tagRemoveButton.addEventListener("click", function() {
+            tagRemoveRowById(tagRowId);
+        });
+        tagRow.children[0].appendChild(tagRemoveButton);
+
     }
     else{
         tagCost.innerText = "-";
