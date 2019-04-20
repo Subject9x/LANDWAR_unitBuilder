@@ -27,8 +27,10 @@ function baseCostSum(){
         utilZeroStat(document.getElementById('dmgLongCostValId').innerText) +
         utilZeroStat(document.getElementById('armorCostValId').innerText) +
         utilZeroStat(document.getElementById('structureCostValId').innerText));
-
+        document.getElementById('scalarCostTotal').innerText = mainUnitData.scalar;
+        document.getElementById('scalarCostValue').innerText = mainUnitData.scalarCost;
     document.getElementById('unitBaseCostId').innerText = unitBaseCostSum;
+    mainUnitData.baseCost = unitBaseCostSum;
 }
 
 /*

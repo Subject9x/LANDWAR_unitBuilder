@@ -19,16 +19,19 @@
           <th><b>Base Stat</b></th>
           <th><b>Input Value</b></th>
           <th><b>Point Cost</b></th>
+          <th><i>Scalar Cost</i></th>
         </tr>
         <tr>
           <td><label for="inputSize">Size</label></td>
           <td><input type="number" pattern=" 0+\.[0-9]*[1-9][0-9]*$" id="inputSizeId" name="inputSize" onfocus="changeInputsize()" onchange="changeInputsize()" value="0"></td>
           <td><label id="sizeCostValId" name="sizeCostVal" >0</label></td>
+          <td><label id="scalarCostTotal"></label></td>
         </tr>
         <tr>
           <td><label for="inputMove">Move</label></td>
           <td><input type="number" pattern=" 0+\.[0-9]*[1-9][0-9]*$" id="inputMoveId" name="inputMove" onfocus="changeInputMove()" onchange="changeInputMove()" value="0"></td>
           <td><label id="moveCostValId" name="moveCostVal">0</label></td>
+          <td><label id="scalarCostValue"></label></td>
         </tr>
         <tr>
           <td><label for="inputEvade">Evade</label></td>

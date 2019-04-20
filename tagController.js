@@ -73,17 +73,25 @@ function tagRemoveRowById(tagRowId){
     let tagRowSelect = tagRow.children[1].children[0];  //yes, this assumes a hardcoded order of child elements ('bad form' - Hook)
     let tagRowSelectValue = tagRowSelect.value.toString();
 
-    //removes tagId from Unit Data's tagIds[]
-    let removeIdIndex = mainUnitData.tagIds.indexOf(tagRowSelectValue, 0);
-    mainUnitData.tagIds.splice(removeIdIndex, 1);
-    
+    //removes tagId from Unit Data's tags[]
+    let tagCounter;
+    let removeIdIndex = -1;
+    for(tagCounter = 0; tagCounter < mainUnitData.tags.length; tagCounter++){
+        let tagData = mainUnitData.tags[tagCounter];
+        if(tagData.value === tagRowSelectValue){
+            removeIdIndex = tagCounter;
+        }
+    }
+    if(removeIdIndex != -1){
+        mainUnitData.tags.splice(removeIdIndex, 1);
+    }
+
     tagTable.deleteRow(tagRow.rowIndex);
 
     //update other take row selects with the change
     tagListsUpdate();
 
     //TODO - adjust total tag costs
-
 };
 
 /*
@@ -116,9 +124,15 @@ function tagList(tagRowId, tagRowSelect){
         tagOption.value = tagItem.id;
         tagOption.text = tagItem.name;
 
-        if(mainUnitData.tagIds.includes(tagItem.id.toString())){
-            tagOption.disabled = 'true';
+        //fix me
+        let tagCounter;
+        for(tagCounter = 0; tagCounter < mainUnitData.tags.length; tagCounter++){
+            let tagData = mainUnitData.tags[tagCounter];
+            if(tagData.id === tagItem.id){
+                tagOption.disabled = 'true';
+            }
         }
+
         tagRowSelect.appendChild(tagOption);   
     }
 };
@@ -144,10 +158,16 @@ function tagRowSelectUpdate(tagRowId){
     
         tagDesc.innerText = tagData.desc;
     
-        if(tagDataEquationList[tagData.func] ){
-            tagCost.innerText = tagDataEquationList[tagData.func](mainUnitData);
+        if(tagData.scalar){
+            tagDataEquationList[tagData.func](mainUnitData);
+            tagCost.innerText = tagData.scalar + '%';
         }
-        mainUnitData.tagIds.push(tagSelector.value);
+        else{
+            if(tagDataEquationList[tagData.func] ){
+                tagCost.innerText = tagDataEquationList[tagData.func](mainUnitData);
+            }
+        }
+        mainUnitData.tags.push(tagData);  //push tag object onto Unit data
         
         //remove selector, lock-in the TAG, because trying to live-update all other lists is a headache
         let tagLabel = document.createElement('label');
@@ -159,7 +179,6 @@ function tagRowSelectUpdate(tagRowId){
         tagRowCell.appendChild(tagLabel);
 
         tagListsUpdate();
-
 
         let tagRow = document.getElementById('tagRow_' + tagRowId);
         let tagRemovelabel = document.getElementById(tagRow.id + "_remove_label");
@@ -173,6 +192,12 @@ function tagRowSelectUpdate(tagRowId){
             tagRemoveRowById(tagRowId);
         });
         tagRow.children[0].appendChild(tagRemoveButton);
+        if(tagData.scalar){
+            mainUnitData.scalar = mainUnitData.scalar + tagData.scalar;
+            let unitScalarTD = document.getElementById('scalarCostTotal');
+            unitScalarTD.innerText = mainUnitData.scalar.toString();
+            mainUnitData.scalarCost = (mainUnitData.baseCost * mainUnitData.scalar).toString();
+        }
 
     }
     else{
