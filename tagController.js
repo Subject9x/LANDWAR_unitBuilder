@@ -46,7 +46,7 @@ function tagAddRow(){
     let cell3Element = document.createElement("input");
     cell3Element.id = "tagRow_" + newTagRowId + "_checkBox";
     cell3Element.type = "checkbox";
-    cell3Element.onclick = function(){tagRowChangeActive(cell3Element)};
+    cell3Element.onclick = function(){tagRowChangeActive(cell3Element, cell4Element)};
     newTagRowCell3.appendChild(cell3Element);
 
     //creates the 'cost' value box
@@ -89,12 +89,12 @@ function tagRemoveRowById(tagRowId){
 /*
     TAG Radio
 */
-function tagRowChangeActive(tagRowCheck){
+function tagRowChangeActive(tagRowCheck, tagRowAmount){
     if(tagRowCheck.checked == 1){
-
+        totalCostSum(tagRowAmount.innerText);
     }
     else{
-
+        totalCostSum(0);
     }
 };
 
