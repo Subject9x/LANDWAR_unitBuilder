@@ -91,10 +91,10 @@ function tagRemoveRowById(tagRowId){
 */
 function tagRowChangeActive(tagRowCheck, tagRowAmount){
     if(tagRowCheck.checked == 1){
-        totalCostSum(tagRowAmount.innerText);
+        totalTagSum(tagRowAmount.innerText);
     }
     else{
-        totalCostSum(0);
+        totalTagSum(-tagRowAmount.innerText);
     }
 };
 

@@ -29,12 +29,14 @@ function baseCostSum(){
         utilZeroStat(document.getElementById('structureCostValId').innerText));
 
     document.getElementById('unitBaseCostId').innerText = unitBaseCostSum;
-    document.getElementById('unitTotalCostId').innerText = unitBaseCostSum;
 }
 
-function totalCostSum(checkedValue){
-    let totalCostSum = (utilZeroStat(document.getElementById('unitBaseCostId').innerText) + utilZeroStat(checkedValue))
-    document.getElementById('unitTotalCostId').innerText = totalCostSum;
+/*
+    Running Total Cost totaller
+*/
+function totalTagSum(checkedValue){
+    let totalCostSum = (utilZeroStat(document.getElementById('unitTotalTagCostId').innerText) + checkedValue)
+    document.getElementById('unitTotalTagCostId').innerText = totalCostSum;
 }
 
 /*
