@@ -46,7 +46,7 @@ function tagAddRow(){
     let cell3Element = document.createElement("input");
     cell3Element.id = "tagRow_" + newTagRowId + "_checkBox";
     cell3Element.type = "checkbox";
-    cell3Element.onclick = function(){tagRowChangeActive(cell3Element)};
+    cell3Element.onclick = function(){tagRowChangeActive(cell3Element, cell4Element)};
     newTagRowCell3.appendChild(cell3Element);
 
     //creates the 'cost' value box
@@ -70,9 +70,16 @@ function tagAddRow(){
 function tagRemoveRowById(tagRowId){
     var tagTable = document.getElementById('tagTable');
     var tagRow = document.getElementById('tagRow_' + tagRowId);
+    var tagRowChecked = document.getElementById('tagRow_' + tagRowId + "_checkBox");
+    var tagCost = document.getElementById("tagRow_" + tagRowId + "_costBox");
     let tagRowSelect = tagRow.children[1].children[0];  //yes, this assumes a hardcoded order of child elements ('bad form' - Hook)
     let tagRowSelectValue = tagRowSelect.value.toString();
 
+    //remove tag from the tagCost if tagRow is checked
+    if(tagRowChecked.checked == 1){
+        totalTagSum(-tagCost.innerText);
+    }
+    
     //removes tagId from Unit Data's tagIds[]
     let removeIdIndex = mainUnitData.tagIds.indexOf(tagRowSelectValue, 0);
     mainUnitData.tagIds.splice(removeIdIndex, 1);
@@ -89,12 +96,12 @@ function tagRemoveRowById(tagRowId){
 /*
     TAG Radio
 */
-function tagRowChangeActive(tagRowCheck){
+function tagRowChangeActive(tagRowCheck, tagRowAmount){
     if(tagRowCheck.checked == 1){
-
+        totalTagSum(tagRowAmount.innerText);
     }
     else{
-
+        totalTagSum(-tagRowAmount.innerText);
     }
 };
 
