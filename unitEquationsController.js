@@ -9,7 +9,16 @@ overview
 function utilZeroStat(stat){
     let statVal = parseFloat(stat);
 
-    if(statVal < 0){
+    if(statVal < 0 || isNaN(statVal)){
+        return 0;
+    }
+    return statVal;
+};
+
+function utilNaNStat(stat){
+    let statVal = parseFloat(stat);
+
+    if(isNaN(statVal)){
         return 0;
     }
     return statVal;
@@ -30,7 +39,26 @@ function baseCostSum(){
         document.getElementById('scalarCostTotal').innerText = mainUnitData.scalar;
         document.getElementById('scalarCostValue').innerText = mainUnitData.scalarCost;
     document.getElementById('unitBaseCostId').innerText = unitBaseCostSum;
-    mainUnitData.baseCost = unitBaseCostSum;
+    totalCostSum();
+}
+
+/*
+    Running Total Tag Cost totaller
+*/
+function totalTagSum(checkedValue){
+    let totalTagCostSum = (utilZeroStat(document.getElementById('unitTotalTagCostId').innerText) + utilNaNStat(checkedValue));
+    document.getElementById('unitTotalTagCostId').innerText = totalTagCostSum;
+    totalCostSum();
+}
+
+/*
+    Running Total Cost totaller
+*/
+function totalCostSum(){
+    let baseCost = utilZeroStat(document.getElementById('unitBaseCostId').innerText) 
+    let tagCost =  utilZeroStat(document.getElementById('unitTotalTagCostId').innerText) 
+        
+    document.getElementById('unitTotalCostId').innerText = baseCost + tagCost;
 }
 
 /*
