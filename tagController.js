@@ -166,7 +166,8 @@ function tagRowSelectUpdate(tagRowId){
         }
         else{
             if(tagDataEquationList[tagData.func] ){
-                tagCost.innerText = tagDataEquationList[tagData.func](mainUnitData);
+                
+                tagCost.innerText = tagData.cost = tagDataEquationList[tagData.func](mainUnitData);
             }
         }
         mainUnitData.tags.push(tagData);  //push tag object onto Unit data
