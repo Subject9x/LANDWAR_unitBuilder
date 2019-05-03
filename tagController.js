@@ -20,6 +20,7 @@ function tagAddRow(){
     let newTagRowCell3 = newTagRow.insertCell(3);
     let newTagRowCell4 = newTagRow.insertCell(4);
     let newTagRowCell5 = newTagRow.insertCell(5);
+    let newTagRowCell6 = newTagRow.insertCell(6);
 
     newTagRow.id = "tagRow_" + newTagRowId;
 
@@ -61,6 +62,13 @@ function tagAddRow(){
     cell5Element.innerText = tagDataLocalList().tags[cell1Element.value].desc;
     newTagRowCell5.appendChild(cell5Element);
     
+    //bah, hold the tag id here
+    let cell6Element = document.createElement("input");
+    cell6Element.id = "tagRow_" + newTagRowId + "_tagId";
+    cell6Element.value = 0;
+    //cell6Element.style.visibility = 'hidden'; DEBUG
+    newTagRowCell6.appendChild(cell6Element);
+
 };
 
 /*
@@ -72,7 +80,7 @@ function tagRemoveRowById(tagRowId){
     var tagRow = document.getElementById('tagRow_' + tagRowId);
     var tagRowChecked = document.getElementById('tagRow_' + tagRowId + "_checkBox");
     var tagCost = document.getElementById("tagRow_" + tagRowId + "_costBox");
-    let tagRowSelect = tagRow.children[1].children[0];  //yes, this assumes a hardcoded order of child elements ('bad form' - Hook)
+    let tagRowSelect = tagRow.children[1].children[0];  //yes, this assumes a hardcoded order of child elements ('bad form, Petah, bad form.' - Hook)
     let tagRowSelectValue = tagRowSelect.value.toString();
 
     //removes tagId from Unit Data's tags[]
@@ -80,14 +88,16 @@ function tagRemoveRowById(tagRowId){
     let removeIdIndex = -1;
     for(tagCounter = 0; tagCounter < mainUnitData.tags.length; tagCounter++){
         let tagData = mainUnitData.tags[tagCounter];
-        if(tagData.value === tagRowSelectValue){
+        if(tagData.id === tagRowSelectValue){
             removeIdIndex = tagCounter;
         }
     }
     if(removeIdIndex != -1){
         mainUnitData.tags.splice(removeIdIndex, 1);
     }
-
+    if(tagRowChecked.checked == 1){
+        totalTagSum(-tagCost.innerText);
+    }
     tagTable.deleteRow(tagRow.rowIndex);
 
     //update other take row selects with the change
@@ -100,11 +110,25 @@ function tagRemoveRowById(tagRowId){
     TAG Radio
 */
 function tagRowChangeActive(tagRowCheck, tagRowAmount){
-    if(tagRowCheck.checked == 1){
-        totalTagSum(tagRowAmount.innerText);
+    let tagId = tagRowCheck.parentElement.parentElement.children[6].children[0].value; //fix at some point, this is rick-diculous
+    let tagData = mainUnitData.tags[tagId]; //fix me, get tag object with id, not index value
+    if(tagData.scalar){
+        //basically, scalar is a special costing function vs normal tags, ergo only run normal costing
+
+        if(tagRowCheck.checked == 1){
+            mainUnitData.scalar = mainUnitData.scalar + tagData.scalar;
+        }
+        else{
+            mainUnitData.scalar = mainUnitData.scalar - tagData.scalar;
+        } 
     }
     else{
-        totalTagSum(-tagRowAmount.innerText);
+        if(tagRowCheck.checked == 1){
+            totalTagSum(tagRowAmount.innerText);
+        }
+        else{
+            totalTagSum(-tagRowAmount.innerText);
+        }
     }
 };
 
@@ -147,31 +171,37 @@ function tagRowSelectUpdate(tagRowId){
     let tagCost = document.getElementById("tagRow_" + tagRowId + "_costBox");
     let tagDesc = document.getElementById("tagRow_" + tagRowId + "_desc");
     let tagRanks = document.getElementById("tagRow_" + tagRowId + "_rank");
+    let tagId = document.getElementById("tagRow_" + tagRowId + "_tagId");
+    let tagRowCheck = document.getElementById('tagRow_' + tagRowId + "_checkBox");
 
     if(tagSelector.value > 0){
         var tagData = tagDataLocalList().tags[tagSelector.value];
-    
+
         if(tagData.rank){
             tagRanks.innerText = "0 / " + tagData.limit;
         }
         else{
-            tagRanks.innerText = "N\A";
+            tagRanks.innerText = "-";
         }
     
         tagDesc.innerText = tagData.desc;
     
         if(tagData.scalar){
             tagDataEquationList[tagData.func](mainUnitData);
-            tagCost.innerText = tagData.scalar + '%';
+            tagCost.innerText = (tagData.scalar * 100) + '%';
         }
         else{
-            if(tagDataEquationList[tagData.func] ){
-                
+            if(tagDataEquationList[tagData.func]){
                 tagCost.innerText = tagData.cost = tagDataEquationList[tagData.func](mainUnitData);
             }
         }
+
+        tagId.value = tagData.id;
+        tagRowCheck.checked = 1;
         mainUnitData.tags.push(tagData);  //push tag object onto Unit data
-        
+
+        tagRowChangeActive(tagRowCheck, tagCost);
+
         //remove selector, lock-in the TAG, because trying to live-update all other lists is a headache
         let tagLabel = document.createElement('label');
         let tagRowCell = tagSelector.parentElement;
@@ -195,13 +225,6 @@ function tagRowSelectUpdate(tagRowId){
             tagRemoveRowById(tagRowId);
         });
         tagRow.children[0].appendChild(tagRemoveButton);
-        if(tagData.scalar){
-            mainUnitData.scalar = mainUnitData.scalar + tagData.scalar;
-            let unitScalarTD = document.getElementById('scalarCostTotal');
-            unitScalarTD.innerText = mainUnitData.scalar.toString();
-            mainUnitData.scalarCost = (mainUnitData.baseCost * mainUnitData.scalar).toString();
-        }
-
     }
     else{
         tagCost.innerText = "-";

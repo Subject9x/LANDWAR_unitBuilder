@@ -55,10 +55,16 @@ function totalTagSum(checkedValue){
     Running Total Cost totaller
 */
 function totalCostSum(){
-    let baseCost = utilZeroStat(document.getElementById('unitBaseCostId').innerText) 
-    let tagCost =  utilZeroStat(document.getElementById('unitTotalTagCostId').innerText) 
+    let baseCost = utilZeroStat(document.getElementById('unitBaseCostId').innerText);
+    let tagCost =  utilZeroStat(document.getElementById('unitTotalTagCostId').innerText);
         
     document.getElementById('unitTotalCostId').innerText = baseCost + tagCost;
+}
+
+function totalScalarSum(){
+    let baseCost = utilZeroStat(document.getElementById('unitBaseCostId').innerText);
+    let tagCost =  utilZeroStat(document.getElementById('unitTotalTagCostId').innerText);
+
 }
 
 /*
