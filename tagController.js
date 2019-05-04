@@ -191,7 +191,7 @@ function tagRowSelectUpdate(tagRowId){
 
         if(tagData.id){
             tagId.value = tagData.id;
-            tagRowCheck.checked = 1;
+            tagRowCheck.checked = 'true';
     
             //tag has max ranks
             if(tagData.rank){
