@@ -163,17 +163,20 @@ function tagDataLocalList(){
             {
                 "name"  : "Rank - Elite",
                 "id"    : 25,
-                "desc"  : "Unit's ATK and DEF stats become 5 ATK Dice and 4 DEF Dice"
+                "desc"  : "Unit's ATK and DEF stats become 5 ATK Dice and 4 DEF Dice",
+                "scalar": 0.2
             },
             {
                 "name"  : "Rank - Green",
                 "id"    : 26,
-                "desc"  : "Unit's ATK and DEF stats become 2 ATK Dice and 1 DEF Dice, subtract this tag cost from the Unit's base price."
+                "desc"  : "Unit's ATK and DEF stats become 2 ATK Dice and 1 DEF Dice, subtract this tag cost from the Unit's base price.",
+                "scalar": -0.2
             },
             {
                 "name"  : "Rank - Veteran",
                 "id"    : 27,
-                "desc"  : "Unit's ATK and DEF stats become 4 ATK Dice and 3 DEF Dice"
+                "desc"  : "Unit's ATK and DEF stats become 4 ATK Dice and 3 DEF Dice",
+                "scalar": 0.1
             },
             {
                 "name"  : "Recon",

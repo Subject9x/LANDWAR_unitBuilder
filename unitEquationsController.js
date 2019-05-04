@@ -38,6 +38,7 @@ function baseCostSum(){
         utilZeroStat(document.getElementById('structureCostValId').innerText));
     document.getElementById('unitBaseCostId').innerText = unitBaseCostSum;
     mainUnitData.baseCost = unitBaseCostSum;
+
 }
 
 /*
@@ -48,6 +49,7 @@ function totalTagSum(checkedValue){
     let totalTagCostSum = (utilZeroStat(document.getElementById('unitTotalTagCostId').innerText) + utilNaNStat(checkedValue));
     document.getElementById('unitTotalTagCostId').innerText = totalTagCostSum;
     mainUnitData.tagTotal = totalTagCostSum;
+    totalCostSum();
 }
 
 /*
@@ -64,6 +66,7 @@ function totalScalarSum(){
     mainUnitData.scalarCost = (mainUnitData.baseCost + mainUnitData.tagTotal) * mainUnitData.scalar;
     document.getElementById('scalarCostTotal').innerText = mainUnitData.scalar;
     document.getElementById('scalarCostValue').innerText = mainUnitData.scalarCost;
+    totalCostSum();
 }
 
 /*

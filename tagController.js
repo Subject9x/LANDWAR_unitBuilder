@@ -25,49 +25,50 @@ function tagAddRow(){
     newTagRow.id = "tagRow_" + newTagRowId;
 
     //create row delete key - only when TAG is chosen
-    let cell0Element = document.createElement("label");
-    cell0Element.id = newTagRow.id + "_remove_label";
-    newTagRowCell0.appendChild(cell0Element);
+    let cell0_RemoveLabel = document.createElement("label");
+    cell0_RemoveLabel.id = newTagRow.id + "_remove_label";
+    newTagRowCell0.appendChild(cell0_RemoveLabel);
 
     //creates dropdown for TAG row
-    let cell1Element = document.createElement("select");
-    tagList("tagRow_" + newTagRowId + "_select", cell1Element);
-    cell1Element.onchange = function(){tagRowSelectUpdate(newTagRowId)};
-    cell1Element.onfocus = function(){tagListOnFocus(this)};
-    newTagRowCell1.appendChild(cell1Element);
+    let cell1_TagSelect = document.createElement("select");
+    tagList("tagRow_" + newTagRowId + "_select", cell1_TagSelect);
+    cell1_TagSelect.onchange = function(){tagRowSelectUpdate(newTagRowId)};
+    cell1_TagSelect.onfocus = function(){tagListOnFocus(this)};
+    newTagRowCell1.appendChild(cell1_TagSelect);
 
     //creates the 'rank' settings
-    let cell2Element = document.createElement("label");
-    cell2Element.id = "tagRow_" + newTagRowId + "_rank";
-    cell2Element.value = 0;
-    cell2Element.innerText = '0/[max]';
-    newTagRowCell2.appendChild(cell2Element);
+    let cell2_TagRank = document.createElement("label");
+    cell2_TagRank.id = "tagRow_" + newTagRowId + "_rank";
+    cell2_TagRank.value = 0;
+    cell2_TagRank.innerText = '0/[max]';
+    newTagRowCell2.appendChild(cell2_TagRank);
 
     //creates the 'active' checkbox
-    let cell3Element = document.createElement("input");
-    cell3Element.id = "tagRow_" + newTagRowId + "_checkBox";
-    cell3Element.type = "checkbox";
-    cell3Element.onclick = function(){tagRowChangeActive(cell3Element, cell4Element)};
-    newTagRowCell3.appendChild(cell3Element);
+    let cell3_TagActiveCheck = document.createElement("input");
+    cell3_TagActiveCheck.id = "tagRow_" + newTagRowId + "_checkBox";
+    cell3_TagActiveCheck.type = "checkbox";
+    cell3_TagActiveCheck.onclick = function(){tagRowChangeActive(newTagRowId)};
+    newTagRowCell3.appendChild(cell3_TagActiveCheck);
 
     //creates the 'cost' value box
-    let cell4Element = document.createElement("label");
-    cell4Element.id =  "tagRow_" + newTagRowId + "_costBox";
-    cell4Element.innerText = '0';
-    newTagRowCell4.appendChild(cell4Element);
+    let cell4_TagCost = document.createElement("label");
+    cell4_TagCost.id =  "tagRow_" + newTagRowId + "_costBox";
+    cell4_TagCost.innerText = '0';
+    newTagRowCell4.appendChild(cell4_TagCost);
 
     //Description section
-    let cell5Element = document.createElement("div");
-    cell5Element.id = "tagRow_" + newTagRowId + "_desc";
-    cell5Element.innerText = tagDataLocalList().tags[cell1Element.value].desc;
-    newTagRowCell5.appendChild(cell5Element);
+    let cell5_TagDesc = document.createElement("div");
+    cell5_TagDesc.id = "tagRow_" + newTagRowId + "_desc";
+    cell5_TagDesc.innerText = tagDataLocalList().tags[cell1_TagSelect.value].desc;
+    newTagRowCell5.appendChild(cell5_TagDesc);
     
     //bah, hold the tag id here
-    let cell6Element = document.createElement("input");
-    cell6Element.id = "tagRow_" + newTagRowId + "_tagId";
-    cell6Element.value = 0;
-    //cell6Element.style.visibility = 'hidden'; DEBUG
-    newTagRowCell6.appendChild(cell6Element);
+    let cell6_HiddenTagId = document.createElement("input");
+    cell6_HiddenTagId.id = "tagRow_" + newTagRowId + "_tagId";
+    cell6_HiddenTagId.value = 0;
+    //cell6_HiddenTagId.style.visibility = 'hidden'; DEBUG
+    cell6_HiddenTagId.disabled = 'true';
+    newTagRowCell6.appendChild(cell6_HiddenTagId);
 
     document.getElementById('btnAddTagRow').disabled = 1;
 };
@@ -79,41 +80,44 @@ function tagAddRow(){
 function tagRemoveRowById(tagRowId){
     var tagTable = document.getElementById('tagTable');
     var tagRow = document.getElementById('tagRow_' + tagRowId);
-    var tagRowCheck = document.getElementById('tagRow_' + tagRowId + "_checkBox");
-    var tagCost = document.getElementById("tagRow_" + tagRowId + "_costBox");
-    let tagId = document.getElementById("tagRow_" + tagRowId + "_tagId");
+    let tagHiddenId = document.getElementById("tagRow_" + tagRowId + "_tagId");
+    let tagRowCheck = document.getElementById("tagRow_" + tagRowId + "_checkBox");
 
     //removes tagId from Unit Data's tags[]
     let tagCounter;
     let removeIdIndex = -1;
     for(tagCounter = 0; tagCounter < mainUnitData.tags.length; tagCounter++){
         let tagData = mainUnitData.tags[tagCounter];
-        if(tagData.id === tagId){
+        if(tagData.id == tagHiddenId.value){
             removeIdIndex = tagCounter;
         }
     }
+
+    if(tagRowCheck.checked == 1){
+        tagRowCheck.checked = 0;
+        tagRowChangeActive(tagRowId);
+    }
+    
     if(removeIdIndex != -1){
         mainUnitData.tags.splice(removeIdIndex, 1);
     }
-    tagRowChangeActive(tagRowCheck, tagCost.innerText);
-
-    tagTable.deleteRow(tagRow.rowIndex);
-
     //update other take row selects with the change
     tagListsUpdate();
 
-    //TODO - adjust total tag costs
+    tagTable.deleteRow(tagRow.rowIndex);
 };
 
 /*
     TAG Radio
 */
-function tagRowChangeActive(tagRowCheck, tagRowAmount){
-    let tagId = tagRowCheck.parentElement.parentElement.children[6].children[0].value; //fix at some point, this is rick-
+function tagRowChangeActive(tagRowId){
+    let tagIdCell = document.getElementById("tagRow_" + tagRowId + "_tagId");
+    let tagRowCheck = document.getElementById("tagRow_" + tagRowId + "_checkBox");
+
     let tagDataIterator;
     let tagData;
     for(tagDataIterator=0; tagDataIterator < mainUnitData.tags.length; tagDataIterator++){
-        if(tagId == mainUnitData.tags[tagDataIterator].id){
+        if(tagIdCell.value == mainUnitData.tags[tagDataIterator].id){
             tagData = mainUnitData.tags[tagDataIterator];
         }
     }
@@ -131,11 +135,12 @@ function tagRowChangeActive(tagRowCheck, tagRowAmount){
         }
         else{
             if(tagDataEquationList[tagData.func]){
+                let currentTagCost = tagDataEquationList[tagData.func](mainUnitData);
                 if(tagRowCheck.checked == 1){
-                    totalTagSum(tagDataEquationList[tagData.func](mainUnitData));
+                    totalTagSum(currentTagCost);
                 }
                 else{
-                    totalTagSum(-tagDataEquationList[tagData.func](mainUnitData));
+                    totalTagSum(-currentTagCost);
                 }
             }
         }
@@ -161,10 +166,10 @@ function tagList(tagRowId, tagRowSelect){
         tagOption.text = tagItem.name;
 
         //fix me
-        let tagCounter;
-        for(tagCounter = 0; tagCounter < mainUnitData.tags.length; tagCounter++){
-            let tagData = mainUnitData.tags[tagCounter];
-            if(tagData.id === tagItem.id){
+        let unitTagsCounter;
+        for(unitTagsCounter = 0; unitTagsCounter < mainUnitData.tags.length; unitTagsCounter++){
+            let tagData = mainUnitData.tags[unitTagsCounter];
+            if(tagData.id == tagItem.id){
                 tagOption.disabled = 'true';
             }
         }
@@ -187,55 +192,58 @@ function tagRowSelectUpdate(tagRowId){
     if(tagSelector.value > 0){
         var tagData = tagDataLocalList().tags[tagSelector.value];
 
-        if(tagData.rank){
-            tagRanks.innerText = "0 / " + tagData.limit;
-        }
-        else{
-            tagRanks.innerText = "-";
-        }
+        if(tagData.id){
+            tagId.value = tagData.id;
+            tagRowCheck.checked = 1;
     
-        tagDesc.innerText = tagData.desc;
-    
-        if(tagData.scalar){
-            //tagDataEquationList[tagData.func](mainUnitData);
-            tagCost.innerText = (tagData.scalar * 100) + '%';
-        }
-        else{
-            if(tagDataEquationList[tagData.func]){
-                tagCost.innerText = tagData.cost = tagDataEquationList[tagData.func](mainUnitData);
+            //tag has max ranks
+            if(tagData.rank){
+                tagRanks.innerText = "0 / " + tagData.limit;
             }
+            else{
+                tagRanks.innerText = "-";
+            }
+        
+            tagDesc.innerText = tagData.desc;
+        
+            if(tagData.scalar){
+                tagCost.innerText = (tagData.scalar * 100) + '%';
+            }
+            else{
+                if(tagDataEquationList[tagData.func]){
+                    tagCost.innerText = tagData.cost = tagDataEquationList[tagData.func](mainUnitData);
+                }
+            }
+    
+            mainUnitData.tags.push(tagData);  //push tag object onto Unit data
+    
+            tagRowChangeActive(tagRowId);
+    
+            //remove selector, lock-in the TAG, because trying to live-update all other lists is a headache
+            let tagLabel = document.createElement('label');
+            let tagRowCell = tagSelector.parentElement;
+            tagLabel.id = tagSelector.id;
+            tagLabel.innerText = tagData.name;
+            tagLabel.value = tagSelector.value;
+            tagSelector.remove();
+            tagRowCell.appendChild(tagLabel);
+    
+            tagListsUpdate();
+    
+            let tagRow = document.getElementById('tagRow_' + tagRowId);
+            let tagRemovelabel = document.getElementById(tagRow.id + "_remove_label");
+            tagRemovelabel.remove();
+    
+            let tagRemoveButton = document.createElement("button");
+            tagRemoveButton.id = tagRowId + "_remove_button";
+    
+            tagRemoveButton.innerHTML = "[-]";
+            tagRemoveButton.addEventListener("click", function() {
+                tagRemoveRowById(tagRowId);
+            });
+            tagRow.children[0].appendChild(tagRemoveButton);
+            document.getElementById('btnAddTagRow').disabled = 0;
         }
-
-        tagId.value = tagData.id;
-        tagRowCheck.checked = 1;
-        mainUnitData.tags.push(tagData);  //push tag object onto Unit data
-
-        tagRowChangeActive(tagRowCheck, tagCost);
-
-        //remove selector, lock-in the TAG, because trying to live-update all other lists is a headache
-        let tagLabel = document.createElement('label');
-        let tagRowCell = tagSelector.parentElement;
-        tagLabel.id = tagSelector.id;
-        tagLabel.innerText = tagData.name;
-        tagLabel.value = tagSelector.value;
-        tagSelector.remove();
-        tagRowCell.appendChild(tagLabel);
-
-        tagListsUpdate();
-
-        let tagRow = document.getElementById('tagRow_' + tagRowId);
-        let tagRemovelabel = document.getElementById(tagRow.id + "_remove_label");
-        tagRemovelabel.remove();
-
-        let tagRemoveButton = document.createElement("button");
-        tagRemoveButton.id = tagRowId + "_remove_button";
-
-        tagRemoveButton.innerHTML = "[-]";
-        tagRemoveButton.addEventListener("click", function() {
-            tagRemoveRowById(tagRowId);
-        });
-        tagRow.children[0].appendChild(tagRemoveButton);
-        document.getElementById('btnAddTagRow').disabled = 0;
     }
     else{
         tagCost.innerText = "-";
