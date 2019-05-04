@@ -86,9 +86,9 @@ function tagRemoveRowById(tagRowId){
     //removes tagId from Unit Data's tags[]
     let tagCounter;
     let removeIdIndex = -1;
-    for(tagCounter = 0; tagCounter < mainUnitData.tags.length; tagCounter++){
-        let tagData = mainUnitData.tags[tagCounter];
-        if(tagData.id == tagHiddenId.value){
+    for(let unitTag of mainUnitData.tags){
+        let tagData = unitTag;
+        if(tagData.id === tagHiddenId.value){
             removeIdIndex = tagCounter;
         }
     }
@@ -114,11 +114,10 @@ function tagRowChangeActive(tagRowId){
     let tagIdCell = document.getElementById("tagRow_" + tagRowId + "_tagId");
     let tagRowCheck = document.getElementById("tagRow_" + tagRowId + "_checkBox");
 
-    let tagDataIterator;
     let tagData;
-    for(tagDataIterator=0; tagDataIterator < mainUnitData.tags.length; tagDataIterator++){
-        if(tagIdCell.value == mainUnitData.tags[tagDataIterator].id){
-            tagData = mainUnitData.tags[tagDataIterator];
+    for(let tagDataIterator of mainUnitData.tags){
+        if(tagIdCell.value == tagDataIterator.id){
+            tagData = tagDataIterator;
         }
     }
     if(tagData.id){
@@ -158,18 +157,16 @@ function tagList(tagRowId, tagRowSelect){
     tagRowSelect.innerHTML = "";
 
     let optionItr;
-    for(optionItr = 0; optionItr < tagData.tags.length; optionItr++){
-        let tagItem = tagData.tags[optionItr];
+    for(let tagOptionIterator of tagData.tags){
+        let tagItem = tagOptionIterator;
         let tagOption = document.createElement('option');
 
         tagOption.value = tagItem.id;
         tagOption.text = tagItem.name;
 
-        //fix me
-        let unitTagsCounter;
-        for(unitTagsCounter = 0; unitTagsCounter < mainUnitData.tags.length; unitTagsCounter++){
-            let tagData = mainUnitData.tags[unitTagsCounter];
-            if(tagData.id == tagItem.id){
+        for(let unitTagsIterator of mainUnitData.tags){
+            let tagData = unitTagsIterator;
+            if(tagData.id === tagItem.id){
                 tagOption.disabled = 'true';
             }
         }
@@ -257,9 +254,8 @@ function tagRowSelectUpdate(tagRowId){
 */
 function tagListsUpdate(){
     let tagRows = document.getElementsByTagName('select');
-    let tagRowsItr;
-    for(tagRowsItr = 0; tagRowsItr < tagRows.length; tagRowsItr++){
-        tagList(tagRows[tagRowsItr].id, tagRows[tagRowsItr]);
+    for(let tagRowsIterator of tagRows){
+        tagList(tagRowsIterator.id, tagRowsIterator);
     }
 };
 
