@@ -111,10 +111,10 @@ function tagCost_Crew_Limit(unitStat_Size_Value){
     [Base Cost] x 25% 
 */
 function tagCost_Fearless(unit){
-    let newScale = unit.scalar + tagDataLocalList().tags[10].scalar;   //yeah I know, heresy
+   /* let newScale = unit.scalar + tagDataLocalList().tags[10].scalar;   //yeah I know, heresy
     let newScaleCost = unit.baseCost * newScale;
     unit.scalar = newScale;
-    unit.scalarCost = newScaleCost;
+    unit.scalarCost = newScaleCost;*/
 }
 
 /*

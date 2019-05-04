@@ -69,6 +69,7 @@ function tagAddRow(){
     //cell6Element.style.visibility = 'hidden'; DEBUG
     newTagRowCell6.appendChild(cell6Element);
 
+    document.getElementById('btnAddTagRow').disabled = 1;
 };
 
 /*
@@ -78,26 +79,24 @@ function tagAddRow(){
 function tagRemoveRowById(tagRowId){
     var tagTable = document.getElementById('tagTable');
     var tagRow = document.getElementById('tagRow_' + tagRowId);
-    var tagRowChecked = document.getElementById('tagRow_' + tagRowId + "_checkBox");
+    var tagRowCheck = document.getElementById('tagRow_' + tagRowId + "_checkBox");
     var tagCost = document.getElementById("tagRow_" + tagRowId + "_costBox");
-    let tagRowSelect = tagRow.children[1].children[0];  //yes, this assumes a hardcoded order of child elements ('bad form, Petah, bad form.' - Hook)
-    let tagRowSelectValue = tagRowSelect.value.toString();
+    let tagId = document.getElementById("tagRow_" + tagRowId + "_tagId");
 
     //removes tagId from Unit Data's tags[]
     let tagCounter;
     let removeIdIndex = -1;
     for(tagCounter = 0; tagCounter < mainUnitData.tags.length; tagCounter++){
         let tagData = mainUnitData.tags[tagCounter];
-        if(tagData.id === tagRowSelectValue){
+        if(tagData.id === tagId){
             removeIdIndex = tagCounter;
         }
     }
     if(removeIdIndex != -1){
         mainUnitData.tags.splice(removeIdIndex, 1);
     }
-    if(tagRowChecked.checked == 1){
-        totalTagSum(-tagCost.innerText);
-    }
+    tagRowChangeActive(tagRowCheck, tagCost.innerText);
+
     tagTable.deleteRow(tagRow.rowIndex);
 
     //update other take row selects with the change
@@ -110,24 +109,35 @@ function tagRemoveRowById(tagRowId){
     TAG Radio
 */
 function tagRowChangeActive(tagRowCheck, tagRowAmount){
-    let tagId = tagRowCheck.parentElement.parentElement.children[6].children[0].value; //fix at some point, this is rick-diculous
-    let tagData = mainUnitData.tags[tagId]; //fix me, get tag object with id, not index value
-    if(tagData.scalar){
-        //basically, scalar is a special costing function vs normal tags, ergo only run normal costing
-
-        if(tagRowCheck.checked == 1){
-            mainUnitData.scalar = mainUnitData.scalar + tagData.scalar;
+    let tagId = tagRowCheck.parentElement.parentElement.children[6].children[0].value; //fix at some point, this is rick-
+    let tagDataIterator;
+    let tagData;
+    for(tagDataIterator=0; tagDataIterator < mainUnitData.tags.length; tagDataIterator++){
+        if(tagId == mainUnitData.tags[tagDataIterator].id){
+            tagData = mainUnitData.tags[tagDataIterator];
         }
-        else{
-            mainUnitData.scalar = mainUnitData.scalar - tagData.scalar;
-        } 
     }
-    else{
-        if(tagRowCheck.checked == 1){
-            totalTagSum(tagRowAmount.innerText);
+    if(tagData.id){
+        if(tagData.scalar){
+            //basically, scalar is a special costing function vs normal tags, ergo only run normal costing
+            if(tagRowCheck.checked == 1){
+                mainUnitData.scalar = mainUnitData.scalar + tagData.scalar;
+
+            }
+            else{
+                mainUnitData.scalar = mainUnitData.scalar - tagData.scalar;
+            } 
+            totalScalarSum();
         }
         else{
-            totalTagSum(-tagRowAmount.innerText);
+            if(tagDataEquationList[tagData.func]){
+                if(tagRowCheck.checked == 1){
+                    totalTagSum(tagDataEquationList[tagData.func](mainUnitData));
+                }
+                else{
+                    totalTagSum(-tagDataEquationList[tagData.func](mainUnitData));
+                }
+            }
         }
     }
 };
@@ -187,7 +197,7 @@ function tagRowSelectUpdate(tagRowId){
         tagDesc.innerText = tagData.desc;
     
         if(tagData.scalar){
-            tagDataEquationList[tagData.func](mainUnitData);
+            //tagDataEquationList[tagData.func](mainUnitData);
             tagCost.innerText = (tagData.scalar * 100) + '%';
         }
         else{
@@ -225,6 +235,7 @@ function tagRowSelectUpdate(tagRowId){
             tagRemoveRowById(tagRowId);
         });
         tagRow.children[0].appendChild(tagRemoveButton);
+        document.getElementById('btnAddTagRow').disabled = 0;
     }
     else{
         tagCost.innerText = "-";

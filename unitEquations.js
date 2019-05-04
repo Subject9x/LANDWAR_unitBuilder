@@ -23,6 +23,7 @@ function unitData(){
         'baseCost' : 0,
         'scalar' : 0,
         'scalarCost' : 0,
+        'finalCost' : 0,
         'costSize' : 0,
         'costMove' : 0,
         'costEvade' : 0,

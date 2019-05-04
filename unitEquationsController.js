@@ -36,35 +36,34 @@ function baseCostSum(){
         utilZeroStat(document.getElementById('dmgLongCostValId').innerText) +
         utilZeroStat(document.getElementById('armorCostValId').innerText) +
         utilZeroStat(document.getElementById('structureCostValId').innerText));
-        document.getElementById('scalarCostTotal').innerText = mainUnitData.scalar;
-        document.getElementById('scalarCostValue').innerText = mainUnitData.scalarCost;
     document.getElementById('unitBaseCostId').innerText = unitBaseCostSum;
-    totalCostSum();
+    mainUnitData.baseCost = unitBaseCostSum;
 }
 
 /*
     Running Total Tag Cost totaller
+    scoped to specific Tag making the call
 */
 function totalTagSum(checkedValue){
     let totalTagCostSum = (utilZeroStat(document.getElementById('unitTotalTagCostId').innerText) + utilNaNStat(checkedValue));
     document.getElementById('unitTotalTagCostId').innerText = totalTagCostSum;
-    totalCostSum();
+    mainUnitData.tagTotal = totalTagCostSum;
 }
 
 /*
     Running Total Cost totaller
 */
-function totalCostSum(){
-    let baseCost = utilZeroStat(document.getElementById('unitBaseCostId').innerText);
-    let tagCost =  utilZeroStat(document.getElementById('unitTotalTagCostId').innerText);
-        
-    document.getElementById('unitTotalCostId').innerText = baseCost + tagCost;
+function totalCostSum(){        
+    document.getElementById('unitTotalCostId').innerText = mainUnitData.finalCost = mainUnitData.baseCost + mainUnitData.tagTotal + mainUnitData.scalarCost;
 }
 
+/*
+    Total Scalar Sum cost
+*/
 function totalScalarSum(){
-    let baseCost = utilZeroStat(document.getElementById('unitBaseCostId').innerText);
-    let tagCost =  utilZeroStat(document.getElementById('unitTotalTagCostId').innerText);
-
+    mainUnitData.scalarCost = (mainUnitData.baseCost + mainUnitData.tagTotal) * mainUnitData.scalar;
+    document.getElementById('scalarCostTotal').innerText = mainUnitData.scalar;
+    document.getElementById('scalarCostValue').innerText = mainUnitData.scalarCost;
 }
 
 /*
