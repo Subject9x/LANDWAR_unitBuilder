@@ -87,13 +87,12 @@ function tagRemoveRowById(tagRowId){
     let tagCounter;
     let removeIdIndex = -1;
     for(let unitTag of mainUnitData.tags){
-        let tagData = unitTag;
-        if(tagData.id === tagHiddenId.value){
+        if(unitTag.id === tagHiddenId.value){
             removeIdIndex = tagCounter;
         }
     }
 
-    if(tagRowCheck.checked == 1){
+    if(tagRowCheck.checked === true){
         tagRowCheck.checked = 0;
         tagRowChangeActive(tagRowId);
     }
@@ -116,14 +115,14 @@ function tagRowChangeActive(tagRowId){
 
     let tagData;
     for(let tagDataIterator of mainUnitData.tags){
-        if(tagIdCell.value == tagDataIterator.id){
+        if(parseInt(tagIdCell.value, 10) === tagDataIterator.id){
             tagData = tagDataIterator;
         }
     }
     if(tagData.id){
         if(tagData.scalar){
             //basically, scalar is a special costing function vs normal tags, ergo only run normal costing
-            if(tagRowCheck.checked == 1){
+            if(tagRowCheck.checked === true){
                 mainUnitData.scalar = mainUnitData.scalar + tagData.scalar;
 
             }
@@ -135,7 +134,7 @@ function tagRowChangeActive(tagRowId){
         else{
             if(tagDataEquationList[tagData.func]){
                 let currentTagCost = tagDataEquationList[tagData.func](mainUnitData);
-                if(tagRowCheck.checked == 1){
+                if(tagRowCheck.checked === true){
                     totalTagSum(currentTagCost);
                 }
                 else{
@@ -158,15 +157,13 @@ function tagList(tagRowId, tagRowSelect){
 
     let optionItr;
     for(let tagOptionIterator of tagData.tags){
-        let tagItem = tagOptionIterator;
         let tagOption = document.createElement('option');
 
-        tagOption.value = tagItem.id;
-        tagOption.text = tagItem.name;
+        tagOption.value = tagOptionIterator.id;
+        tagOption.text = tagOptionIterator.name;
 
         for(let unitTagsIterator of mainUnitData.tags){
-            let tagData = unitTagsIterator;
-            if(tagData.id === tagItem.id){
+            if(unitTagsIterator.id === tagOptionIterator.id){
                 tagOption.disabled = 'true';
             }
         }
