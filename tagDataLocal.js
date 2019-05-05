@@ -75,7 +75,9 @@ function tagDataLocalList(){
             {
                 "name"  : "Fearless",
                 "id"    : 10,
-                "desc"  : "Unit automatically passes any Stress Check."
+                "func"  : "tag_Fearless",
+                "desc"  : "Unit automatically passes any Stress Check.",
+                "scalar": 0.25
             },
             {
                 "name"  : "Field Repair Kit",
@@ -161,17 +163,20 @@ function tagDataLocalList(){
             {
                 "name"  : "Rank - Elite",
                 "id"    : 25,
-                "desc"  : "Unit's ATK and DEF stats become 5 ATK Dice and 4 DEF Dice"
+                "desc"  : "Unit's ATK and DEF stats become 5 ATK Dice and 4 DEF Dice",
+                "scalar": 0.2
             },
             {
                 "name"  : "Rank - Green",
                 "id"    : 26,
-                "desc"  : "Unit's ATK and DEF stats become 2 ATK Dice and 1 DEF Dice, subtract this tag cost from the Unit's base price."
+                "desc"  : "Unit's ATK and DEF stats become 2 ATK Dice and 1 DEF Dice, subtract this tag cost from the Unit's base price.",
+                "scalar": -0.2
             },
             {
                 "name"  : "Rank - Veteran",
                 "id"    : 27,
-                "desc"  : "Unit's ATK and DEF stats become 4 ATK Dice and 3 DEF Dice"
+                "desc"  : "Unit's ATK and DEF stats become 4 ATK Dice and 3 DEF Dice",
+                "scalar": 0.1
             },
             {
                 "name"  : "Recon",
@@ -249,6 +254,7 @@ function tagDataLocalEquationList(){
         tag_Cargo : (mainUnitData)=>{ return tagCost_Cargo(mainUnitData.size);},
         tag_Charger : (mainUnitData)=>{ return tagCost_Charger(mainUnitData.size, mainUnitData.move);},
         tag_Crew : (mainUnitData)=>{ return tagCost_Crew(mainUnitData.size, 0);},
+        tag_Fearless : (mainUnitData)=>{ return tagCost_Fearless(mainUnitData);},   //somehow need to pass in tag's scalar value
         tag_FieldRepair : (mainUnitData)=>{ return tagCost_FieldRepair(mainUnitData.size, mainUnitData.move);},
         tag_Fortification : (mainUnitData)=>{ return tagCost_Fortification(mainUnitData.move, mainUnitData.dmgShort);},
         tag_ForwardObserver : (mainUnitData)=>{ return tagCost_ForwardObserver(mainUnitData.move, mainUnitData.armor, mainUnitData.structure);},

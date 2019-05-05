@@ -22,6 +22,8 @@ function unitData(){
         'structure' : 0,
         'baseCost' : 0,
         'scalar' : 0,
+        'scalarCost' : 0,
+        'finalCost' : 0,
         'costSize' : 0,
         'costMove' : 0,
         'costEvade' : 0,
@@ -31,7 +33,8 @@ function unitData(){
         'costDmgLong' : 0,
         'costArmor' : 0,
         'costStructure' : 0,
-        'tagIds' : []
+        'tags' : [],
+        'tagTotal' : 0
     }];
 };
 
