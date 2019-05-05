@@ -155,7 +155,6 @@ function tagList(tagRowId, tagRowSelect){
     //wipe out list
     tagRowSelect.innerHTML = "";
 
-    let optionItr;
     for(let tagOptionIterator of tagData.tags){
         let tagOption = document.createElement('option');
 
