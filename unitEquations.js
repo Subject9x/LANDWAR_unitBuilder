@@ -14,7 +14,7 @@ function unitData(){
         'size' : 0,
         'move' : 0,
         'evade' : 0,
-        'melee' : 0,
+        'dmgMelee' : 0,
         'dmgShort' : 0,
         'dmgMedium' : 0,
         'dmgLong' : 0,
@@ -27,7 +27,7 @@ function unitData(){
         'costSize' : 0,
         'costMove' : 0,
         'costEvade' : 0,
-        'costMelee' : 0,
+        'costDmgMelee' : 0,
         'costDmgShort' : 0,
         'costDmgMedium' : 0,
         'costDmgLong' : 0,
@@ -66,6 +66,13 @@ function costStat_Move(unitMove, unitSize){
 function costStat_Evade(unitEvade){
     return (unitEvade * 2);
 };
+
+/*
+    Unit Damage Cost - Melee
+*/
+function costStat_DamageMelee(unitDmgMelee, unitSize, unitMove){
+    return ((unitDmgMelee * 2) + ((unitMove / 4) - unitSize / 2));
+}
 
 /*
     Unit Damage Cost - Short
