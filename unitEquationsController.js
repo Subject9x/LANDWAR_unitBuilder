@@ -31,6 +31,7 @@ function baseCostSum(){
     let unitBaseCostSum = (utilZeroStat(document.getElementById('sizeCostValId').innerText) +
         utilZeroStat(document.getElementById('moveCostValId').innerText) +
         utilZeroStat(document.getElementById('evadeCostValId').innerText) +
+        utilZeroStat(document.getElementById('dmgMeleeCostValId').innerText) +
         utilZeroStat(document.getElementById('dmgShortCostValId').innerText) +
         utilZeroStat(document.getElementById('dmgMediumCostValId').innerText) +
         utilZeroStat(document.getElementById('dmgLongCostValId').innerText) +
@@ -112,6 +113,24 @@ function changeInputEvade(){
     baseCostSum();
 };
 
+/*
+    inputDmgMelee
+*/
+function changeInputDamageMelee(){
+    let newDamageMeleeVal = utilZeroStat(document.getElementById('inputDmgMeleeId').value);
+
+    if(newDamageMeleeVal >= 1){
+        document.getElementById('dmgMeleeCostValId').innerText = mainUnitData.costDmgMelee = costStat_DamageMelee(newDamageMeleeVal, mainUnitData.size, mainUnitData.move );
+        mainUnitData.dmgMelee = newDamageMeleeVal;
+    }
+    else{
+        document.getElementById('dmgMeleeCostValId').innerText = 0;
+        mainUnitData.costDmgMelee = 0;
+        mainUnitData.dmgMelee = 0;
+    }
+
+    baseCostSum();
+};
 /*
     inputDmgShort
 */
